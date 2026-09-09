@@ -68,28 +68,58 @@
 
     nav.primary { display:flex; gap:14px; align-items:center; }
     nav.primary a { text-decoration:none; color:var(--text); font-weight:700; padding:6px 10px; border-radius:8px; }
-
-     .toggle { display:flex; align-items:center; gap:10px; }
+    nav.primary a:hover{ background:var(--card-bg); }
+    
+    .toggle {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:15px;
+      color:var(--muted);
+      user-select:none;
+    }
     .switch {
-      --w:52px; --h:26px;
-      width:var(--w); height:var(--h);
-      border-radius:999px; padding:4px;
+      --w: var(--toggle-size);
+      --h: calc(var(--toggle-size) / 2);
+      position:relative;
+      width:var(--w);
+      height:var(--h);
       background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-      border:3px solid rgba(0,0,0,0.08);
-      display:inline-flex; align-items:center;
+      border-radius:999px;
+      padding:5px;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      transition:box-shadow .18s ease, background .18s ease, transform .12s ease;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
     }
-    html.dark .switch { background:#000; border-color:rgba(255,255,255,0.9); }
+    .switch:focus { outline: 2px solid color-mix(in srgb, var(--accent) 36%, transparent); outline-offset:4px; }
+    .switch input { display:none; }
     .knob {
-      width: calc(var(--h) - 8px);
-      height: calc(var(--h) - 8px);
+      width: calc(var(--h) - 6px);
+      height: calc(var(--h) - 6px);
+      background:white;
       border-radius:50%;
-      background: #000;
-      border: 2px solid #000;
-      transition: transform .18s ease, background .12s;
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
       transform: translateX(0);
+      box-shadow:0 8px 22px rgba(0,0,0,0.12);
     }
-    html.dark .knob { background:#fff; border-color:#fff; transform: translateX(calc(var(--w) - var(--h))); }
+    /* when dark: move knob right, change switch background to accent and add glow */
+    html.dark .switch {
+      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(0,0,0,0.06));
+      box-shadow: 0 10px 36px rgba(0,0,0,0.12), 0 0 20px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+    html.dark .knob { transform: translateX(calc(var(--w) - var(--h))); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
+
+    .switch .icon {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:14px;
+      line-height:1;
+      pointer-events:none;
+      opacity:0.95;
+    }
 
     /* Team grid: 3 columns */
     .team-grid{
@@ -179,7 +209,7 @@
 
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
-        <a href="members.html">Members</a>
+        <a href="about.html">About</a>
 
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
