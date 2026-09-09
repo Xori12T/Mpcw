@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Multipurpose Coding — Home</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent: #008c44;
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #666666;
+      --card-bg: #f7f7f7;
+      --radius: 10px;
+      --max-width: 1100px;
+    }
+
+    /* Dark theme variables (flipped by .dark on <html>) */
+    html.dark {
+      --bg: #0b0b0b;
+      --text: #f7f7f7;
+      --muted: #bdbdbd;
+      --card-bg: #0f0f10;
+    }
+
+    /* Reset + base */
+    * { box-sizing: border-box; }
+    html,body { height:100%; }
+    body{
+      margin:0;
+      font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    /* Layout */
+    .container{
+      max-width:var(--max-width);
+      margin:36px auto;
+      padding:24px;
+    }
+
+    header.nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:28px;
+    }
+
+    .brand {
+      display:flex;
+      gap:14px;
+      align-items:center;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    .logo {
+      width:52px;
+      height:52px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),#06aa5a);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-family: "Oswald", sans-serif;
+      font-size:20px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .brand h1{
+      margin:0;
+      font-family:"Oswald", "Lexend", sans-serif;
+      font-weight:700;
+      letter-spacing:0.6px;
+      font-size:20px;
+    }
+
+    nav.primary {
+      display:flex;
+      gap:16px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    nav.primary a{
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+      padding:6px 10px;
+      border-radius:8px;
+      transition:background .18s ease, color .18s ease;
+      font-size:15px;
+    }
+    nav.primary a:hover{ background:var(--card-bg); }
+
+    /* Dark mode toggle */
+    .toggle {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .switch {
+      position:relative;
+      width:44px;
+      height:26px;
+      background:var(--card-bg);
+      border-radius:999px;
+      padding:3px;
+      cursor:pointer;
+    }
+    .switch input { display:none; }
+    .knob {
+      position:absolute;
+      width:20px;
+      height:20px;
+      background:white;
+      border-radius:50%;
+      top:3px;
+      left:3px;
+      transition:left .18s ease, transform .18s ease;
+      box-shadow:0 3px 8px rgba(0,0,0,0.12);
+    }
+    html.dark .knob { transform: translateX(18px); }
+
+    /* Hero */
+    .hero {
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
+      align-items:center;
+      margin-bottom:28px;
+    }
+    .hero .lead {
+      padding:22px;
+      background:linear-gradient(180deg, rgba(0,140,68,0.04), transparent);
+      border-radius:var(--radius);
+    }
+    h2.title {
+      margin:0 0 12px 0;
+      font-family:"Oswald",sans-serif;
+      font-weight:700;
+      font-size:36px; /* tall, bold */
+      letter-spacing:0.2px;
+      color:var(--text);
+    }
+    p.lead-desc { margin:0 0 12px 0; color:var(--muted); font-size:16px; }
+
+    .cta {
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+    }
+    .btn {
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      font-family:"Oswald",sans-serif;
+    }
+    .btn.ghost { background:transparent; color:var(--accent); border:2px solid var(--accent); }
+
+    /* Cards */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+    .card {
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+    .card h3 { margin:0 0 8px 0; font-family:"Oswald",sans-serif; font-size:16px;}
+    .placeholder {
+      background:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+      border-radius:8px;
+      padding:12px;
+      color:var(--muted);
+    }
+
+    /* Gallery thumbnails */
+    .gallery {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .thumb {
+      width:96px;
+      height:72px;
+      background:#ddd;
+      border-radius:8px;
+      display:inline-block;
+      object-fit:cover;
+    }
+
+    footer {
+      margin-top:28px;
+      padding-top:18px;
+      border-top:1px solid rgba(0,0,0,0.06);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero { grid-template-columns: 1fr; }
+      .brand h1 { font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="nav">
+      <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
+        <div class="logo">MC</div>
+        <h1>Multipurpose Coding</h1>
+      </a>
+
+      <nav class="primary" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="members.html">Members</a>
+        <!-- Add more links / pages here -->
+        <div class="toggle" title="Dark mode">
+          <label class="switch" aria-hidden="true">
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
+            <span class="knob" aria-hidden="true"></span>
+          </label>
+          <span class="vis">Dark</span>
+        </div>
+      </nav>
+    </header>
+
+    <main class="hero" role="main">
+      <section class="lead">
+        <h2 class="title">Multipurpose Coding</h2>
+        <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship. Add club mission, meeting time, and quick links below.</p>
+        <div class="cta">
+          <button class="btn" onclick="location.href='#join'">Join</button>
+          <button class="btn ghost" onclick="location.href='about.html'">Learn more</button>
+        </div>
+
+        <div class="grid" style="margin-top:16px;">
+          <div class="card">
+            <h3>About the club</h3>
+            <div class="placeholder">
+              <!-- Replace text below with a short blurb about the club -->
+              <p><strong>Meeting:</strong> Wednesdays 3:30–4:30pm</p>
+              <p><strong>Place:</strong> Room 104 / Zoom</p>
+              <p><strong>Focus:</strong> Web, Roblox, Python projects, and hack nights.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Officers</h3>
+            <div class="placeholder">
+              <!-- Replace with officers' names, roles, contact -->
+              <p>President — Name</p>
+              <p>Vice — Name</p>
+              <p>Advisor — Teacher Name</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Next event</h3>
+            <div class="placeholder">
+              <p><strong>Project Night:</strong> Date here</p>
+              <p>Bring laptops & project ideas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3>Gallery</h3>
+          <div class="gallery" aria-hidden="false">
+            <!-- Put small images in /assets/images/ -->
+            <img class="thumb" src="assets/images/sample1.jpg" alt="Project screenshot 1">
+            <img class="thumb" src="assets/images/sample2.jpg" alt="Project screenshot 2">
+            <img class="thumb" src="assets/images/sample3.jpg" alt="Project screenshot 3">
+            <!-- If images are missing show placeholder grey boxes -->
+          </div>
+          <p style="margin-top:10px;color:var(--muted);font-size:13px;">Add images to <code>/assets/images/</code> and update these src paths.</p>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3 id="join">Join</h3>
+          <div class="placeholder">
+            <p>Sign-up link or contact: <strong>email@school.edu</strong></p>
+            <p><a href="mailto:email@school.edu" style="color:var(--accent);text-decoration:underline;">Email us to join</a></p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section style="margin-top:18px;">
+      <div class="card">
+        <h3>How to use / edit this site</h3>
+        <ol style="margin:0 0 0 18px;color:var(--muted);">
+          <li>Place images in <code>/assets/images/</code> and update the <code>&lt;img src=&quot;...&quot;&gt;</code> paths.</li>
+          <li>Edit the text placeholders (About, Officers, Next event).</li>
+          <li>To add pages create new .html files (example below) and add links to the top nav.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div>© <strong>Multipurpose Coding</strong> — Add year / school</div>
+        <div style="color:var(--muted);font-size:13px;">Made for quick GitHub Pages deployment</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Dark mode: toggle and persist
+    const toggle = document.getElementById('darkToggle');
+    const rootEl = document.documentElement;
+    const storageKey = 'mpc-dark';
+
+    // Initialize from localStorage or prefers-color-scheme
+    (function initTheme(){
+      const saved = localStorage.getItem(storageKey);
+      if (saved !== null) {
+        if (saved === '1') rootEl.classList.add('dark');
+        toggle.checked = saved === '1';
+      } else {
+        // default: follow OS preference
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) { rootEl.classList.add('dark'); toggle.checked = true; }
+      }
+    })();
+
+    toggle.addEventListener('change', () => {
+      if(toggle.checked) {
+        rootEl.classList.add('dark');
+        localStorage.setItem(storageKey,'1');
+      } else {
+        rootEl.classList.remove('dark');
+        localStorage.setItem(storageKey,'0');
+      }
+    });
+
+    // Small accessibility: allow space to toggle
+    document.querySelectorAll('.switch').forEach(s => {
+      s.addEventListener('keydown', e => {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle.checked = !toggle.checked; toggle.dispatchEvent(new Event('change')); }
+      });
+      s.setAttribute('tabindex','0');
+    });
+  </script>
+</body>
+</html>
