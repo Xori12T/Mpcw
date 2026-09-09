@@ -244,7 +244,6 @@
       border-radius:10px;
       padding:14px;
       color:var(--muted);
-      box-shadow: 6px 6px 0 var(--shadow-color);
       font-size:1.03rem;
     }
 
@@ -290,15 +289,11 @@
 
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="members.html">Members</a>
-        <!-- Removed Events tab as requested -->
 
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
             <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
-            <span class="icon sun" aria-hidden="true">☀️</span>
-            <span class="icon moon" aria-hidden="true">🌙</span>
             <span class="knob" aria-hidden="true"></span>
           </label>
           <span style="font-weight:700;color:var(--muted);font-size:0.98rem;">Dark</span>
@@ -320,10 +315,8 @@
         </div>
       </section>
 
-      <!-- Full-width 2x2 grid (About | Officers)
-           (Gallery below About) (Join below Officers) -->
+
       <section class="full-grid" aria-label="Main cards">
-        <!-- About (top-left) -->
         <div class="card" id="about">
           <h3>About</h3>
           <div class="placeholder">

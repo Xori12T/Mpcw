@@ -22,7 +22,7 @@
       --h1-size: 34px;
       --title-size: 26px;
       --name-size: 20px;
-      --info-size: 16px;
+      --info-size: 14px;
     }
 
     html.dark {
@@ -158,6 +158,15 @@
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="members.html">Members</a>
+
+        <div class="toggle" title="Dark mode toggle">
+          <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
+            <span class="knob" aria-hidden="true"></span>
+          </label>
+          <span style="font-weight:700;color:var(--muted);font-size:0.98rem;">Dark</span>
+        </div>
+      </nav>
       </nav>
     </header>
 
@@ -165,26 +174,26 @@
       <section class="team-grid" aria-label="Club officers">
         <!-- President -->
         <article class="member" aria-labelledby="pres-role">
-          <img class="portrait" src="assets/images/president.jpg" alt="President photo (replace with your image)">
+          <img class="portrait" src="assets/images/president.jpg" alt="photo of me :o if it doesnt appear that means it didn't load or i didn't put an image :/">
           <div id="pres-role" class="role">President</div>
-          <div class="name">President Name</div>
-          <div class="info">Senior • Computer Science</div>
+          <div class="name">William Xiong</div>
+          <div class="info">Junior, likes making all sorts of things. </div>
         </article>
 
         <!-- VP -->
         <article class="member" aria-labelledby="vp-role">
-          <img class="portrait" src="assets/images/vp.jpg" alt="VP photo (replace with your image)">
+          <img class="portrait" src="assets/images/vp.jpg" alt="photo of the vice prez. if it doesnt appear that means it didn't load or i didn't put an image :/">
           <div id="vp-role" class="role">VP</div>
-          <div class="name">VP Name</div>
-          <div class="info">Junior • AI & Robotics</div>
+          <div class="name">Riland Yen</div>
+          <div class="info">Junior, likes to hang out w/ friends</div>
         </article>
 
         <!-- Advisor -->
         <article class="member" aria-labelledby="adv-role">
           <img class="portrait" src="assets/images/advisor.jpg" alt="Advisor photo (replace with your image)">
           <div id="adv-role" class="role">Advisor</div>
-          <div class="name">Teacher Name</div>
-          <div class="info">Computer Science Teacher</div>
+          <div class="name">Mr. Nelson</div>
+          <div class="info">The GOAT! He teaches NGSS and AP Physics. </div>
         </article>
       </section>
     </main>
