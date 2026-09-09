@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About — Multipurpose Coding</title>
+  <title>Multipurpose Coding — Home</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
@@ -17,195 +17,262 @@
       --card-bg: #f7f7f7;
       --radius: 12px;
       --max-width: 1100px;
+      /* shadow used for the down-right hard dropshadow */
       --shadow-color: rgba(0,0,0,0.06);
+      --toggle-size: 52px;
 
+      /* base sizing — bumped up for "two sizes bigger" feel */
       --base-font-size: 18px;
-      --h1-size: 34px;
-      --title-size: 26px;
-      --name-size: 20px;
-      --info-size: 14px;
-
-      /* strong text scale for About & Officers (adjust this to change "how much bigger") */
-      --strong-scale: 2.0; /* 2.0 = about twice the base font size; increase to make it bigger */
+      --h1-size: 34px; /* header brand */
+      --h2-size: 36px; /* hero (reverted) */
+      --h3-size: 20px;
+      --btn-font-size: 18px;
     }
 
+    /* Dark theme variables (flipped by .dark on <html>) */
     html.dark {
       --bg: #0b0b0b;
       --text: #f7f7f7;
       --muted: #bdbdbd;
       --card-bg: #0f0f10;
+      /* shadow is lighter than background so it reads as a lighter offset */
       --shadow-color: rgba(255,255,255,0.04);
+      /* make accent slightly brighter on dark */
       --accent: #00a657;
     }
 
-    *{box-sizing:border-box}
+    /* Reset + base */
+    * { box-sizing: border-box; }
+    html,body { height:100%; }
     body{
       margin:0;
-      font-family:"Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background:var(--bg);
       color:var(--text);
-      font-size:var(--base-font-size);
       -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.55;
+      font-size: var(--base-font-size);
     }
 
+    /* Container */
     .container{
       max-width:var(--max-width);
       margin:36px auto;
       padding:28px;
     }
 
-    header.nav{
+    /* Top nav / brand */
+    header.nav {
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      margin-bottom:22px;
-    }
-    .brand { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
-    .logo{
-      width:56px; height:56px; border-radius:10px;
-      background:linear-gradient(135deg,var(--accent),#06aa5a);
-      display:flex; align-items:center; justify-content:center;
-      color:white; font-family:"Oswald"; font-weight:800; font-size:20px;
-    }
-    .brand h1{ margin:0; font-family:"Oswald"; font-size:var(--h1-size); font-weight:800; }
-
-    nav.primary { display:flex; gap:14px; align-items:center; }
-    nav.primary a { text-decoration:none; color:var(--text); font-weight:700; padding:6px 10px; border-radius:8px; }
-
-    .toggle { display:flex; align-items:center; gap:10px; }
-    .switch {
-      --w:52px; --h:26px;
-      width:var(--w); height:var(--h);
-      border-radius:999px; padding:4px;
-      background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-      border:3px solid rgba(0,0,0,0.08);
-      display:inline-flex; align-items:center;
-      cursor:pointer;
-    }
-    html.dark .switch { background:#000; border-color:rgba(255,255,255,0.9); }
-    .knob {
-      width: calc(var(--h) - 8px);
-      height: calc(var(--h) - 8px);
-      border-radius:50%;
-      background: #000;
-      border: 2px solid #000;
-      transition: transform .18s ease, background .12s;
-      transform: translateX(0);
-    }
-    html.dark .knob { background:#fff; border-color:#fff; transform: translateX(calc(var(--w) - var(--h))); }
-
-    /* Team grid: 3 columns */
-    .team-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:22px;
-      align-items:start;
-    }
-
-    .member {
-      background:var(--card-bg);
-      border-radius:12px;
-      padding:20px;
-      text-align:center;
-      box-shadow: 6px 6px 0 var(--shadow-color);
-      min-height: 360px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
       gap:16px;
+      margin-bottom:32px;
     }
 
-    /* Portrait square (optional) */
-    .portrait {
-      width:100%;
-      max-width:380px;
-      aspect-ratio:1/1;
-      object-fit:cover;
-      display:block;
-      border:5px solid #000;
-      border-radius:6px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-      background:#e9e9e9;
+    .brand {
+      display:flex;
+      gap:14px;
+      align-items:center;
+      text-decoration:none;
+      color:var(--text);
     }
 
-    .member .role {
-      font-family:"Oswald",sans-serif;
-      font-size:var(--title-size);
+    .logo {
+      width:60px;
+      height:60px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#06aa5a);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
       font-weight:800;
+      font-family: "Oswald", sans-serif;
+      font-size:22px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.08);
+    }
+
+    .brand h1{
       margin:0;
-      color:var(--text);
+      font-family:"Oswald", "Lexend", sans-serif;
+      font-weight:800;
+      letter-spacing:0.6px;
+      font-size:var(--h1-size); /* increased header h1 */
     }
 
-    .member .name {
-      display:inline-block;
-      padding:10px 14px;
-      margin-top:4px;
-      font-size:var(--name-size);
+    nav.primary {
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    nav.primary a{
+      color:var(--text);
+      text-decoration:none;
       font-weight:700;
-      border-radius:8px;
-      background:transparent;
-      color:var(--text);
-      min-width:60%;
-      border:2px solid rgba(0,0,0,0.06);
-    }
-
-    .member .info {
-      margin-top:8px;
-      font-size:var(--info-size);
-      color:var(--muted);
       padding:8px 12px;
-      background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
-      border-radius:8px;
-      min-width:70%;
+      border-radius:10px;
+      transition:background .14s ease, color .14s ease;
+      font-size:var(--base-font-size);
     }
+    nav.primary a:hover{ background:var(--card-bg); }
 
-    /* -- make <strong> much larger inside #about and #officers placeholders -- */
-    #about .placeholder strong,
-    #officers .placeholder strong {
-      font-size: calc(var(--base-font-size) * var(--strong-scale));
-      font-weight:900;
-      display:inline-block;
-      margin-bottom:6px;
+    /* Emphasized Dark mode toggle */
+    .toggle {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:15px;
+      color:var(--muted);
+      user-select:none;
     }
+    .switch {
+      --w: var(--toggle-size);
+      --h: calc(var(--toggle-size) / 2);
+      position:relative;
+      width:var(--w);
+      height:var(--h);
+      background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
+      border-radius:999px;
+      padding:5px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      transition:box-shadow .18s ease, background .18s ease, transform .12s ease;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+    }
+    .switch:focus { outline: 2px solid color-mix(in srgb, var(--accent) 36%, transparent); outline-offset:4px; }
+    .switch input { display:none; }
+    .knob {
+      width: calc(var(--h) - 6px);
+      height: calc(var(--h) - 6px);
+      background:white;
+      border-radius:50%;
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
+      transform: translateX(0);
+      box-shadow:0 8px 22px rgba(0,0,0,0.12);
+    }
+    /* when dark: move knob right, change switch background to accent and add glow */
+    html.dark .switch {
+      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(0,0,0,0.06));
+      box-shadow: 0 10px 36px rgba(0,0,0,0.12), 0 0 20px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+    html.dark .knob { transform: translateX(calc(var(--w) - var(--h))); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
 
-    /* Gallery card: 5 large pictures in a grid */
-    #gallery .gallery {
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
+    .switch .icon {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:14px;
+      line-height:1;
+      pointer-events:none;
+      opacity:0.95;
+    }
+    .switch .sun { left:10px; color: #ffb84d; }
+    .switch .moon { right:10px; color: #cfe6ff; }
+
+    /* Hero intro (kept simple, hero h2 reverted) */
+    .hero {
+      margin-bottom:24px;
+    }
+    .hero .lead {
+      padding:26px;
+      background:linear-gradient(180deg, rgba(0,140,68,0.04), transparent);
+      border-radius:var(--radius);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.04), 6px 6px 0 var(--shadow-color);
+    }
+    h2.title {
+      margin:0 0 12px 0;
+      font-family:"Oswald",sans-serif;
+      font-weight:700;
+      font-size:var(--h2-size); /* reverted to 36px */
+      letter-spacing:0.2px;
+      color:var(--text);
+    }
+    p.lead-desc { margin:0 0 12px 0; color:var(--muted); font-size:1.05rem; }
+
+    .cta {
+      display:flex;
       gap:12px;
+      margin-top:14px;
+    }
+    .btn {
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:12px 18px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+      font-family:"Oswald",sans-serif;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:var(--btn-font-size); /* both buttons equal size */
+    }
+    .btn.ghost { background:transparent; color:var(--accent); border:3px solid var(--accent); padding:10px 16px; }
+
+    /* BIG 2x2 grid: full-width across the container */
+    .full-grid {
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:20px;
+      width:100%;
+    }
+
+    .card {
+      background:var(--card-bg);
+      border-radius:14px;
+      padding:18px;
+      /* down-right hard drop shadow */
+      box-shadow: 6px 6px 0 var(--shadow-color);
+      min-height:150px;
+    }
+    .card h3 {
+      margin:0 0 10px 0;
+      font-family:"Oswald",sans-serif;
+      font-size:var(--h3-size);
+      font-weight:700;
+    }
+    .placeholder {
+      background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+      border-radius:10px;
+      padding:14px;
+      color:var(--muted);
+      font-size:1.03rem;
+    }
+
+    /* Gallery */
+    .gallery {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
       align-items:center;
     }
-    #gallery .thumb {
-      width:100%;
-      aspect-ratio: 4 / 3;
-      object-fit:cover;
-      border-radius:10px;
+    .thumb {
+      width:140px;
+      height:100px;
       background:#ddd;
-      display:block;
+      border-radius:10px;
+      display:inline-block;
+      object-fit:cover;
     }
-
-    /* keep card styling consistent */
-    .card { background:var(--card-bg); border-radius:14px; padding:18px; box-shadow: 6px 6px 0 var(--shadow-color); }
-
-    /* responsive */
-    @media (max-width:1100px) {
-      .team-grid { grid-template-columns: 1fr; }
-      #gallery .gallery { grid-template-columns: repeat(2, 1fr); }
-      .portrait { max-width:640px; width:100%; }
-      :root { --h1-size:28px; --title-size:22px; --name-size:18px; --info-size:15px; }
+    /* Responsive adjustments */
+    @media (max-width:1000px){
+      .full-grid { grid-template-columns: 1fr; }
+      .logo { width:52px; height:52px; font-size:20px; }
+      :root { --h1-size: 28px; --h2-size:32px; --h3-size:18px; --btn-font-size:16px; }
     }
-    @media (max-width:560px) {
-      #gallery .gallery { grid-template-columns: 1fr; }
-    }
-
-    /* REMOVE the big site footer — nothing to style (footer removed from markup) */
   </style>
 </head>
 <body>
   <div class="container">
-    <header class="nav" role="banner">
+    <header class="nav">
       <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
         <div class="logo">MC</div>
         <h1>Multipurpose Coding</h1>
@@ -213,12 +280,11 @@
 
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
-        <a href="members.html">Members</a>
+        <a href="about.html">About</a>
 
-        <!-- Dark mode switch (keeps the current ID used by your JS) -->
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
-            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" />
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
             <span class="knob" aria-hidden="true"></span>
           </label>
           <span style="font-weight:700;color:var(--muted);font-size:0.98rem;">Dark</span>
@@ -226,21 +292,23 @@
       </nav>
     </header>
 
+    <!-- Hero / short mission -->
     <main>
-      <!-- Hero / short mission -->
       <section class="hero">
         <div class="lead">
           <h2 class="title">Multipurpose Coding</h2>
-          <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship.</p>
+          <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship. Add club mission, meeting time, and quick links below.</p>
+          <div class="cta">
+            <!-- Primary button now "Sign Up" and larger; learn-more same size -->
+            <a class="btn" href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            <a class="btn ghost" href="about.html" role="button">Learn more</a>
+          </div>
         </div>
       </section>
 
-      <!-- Main 3-column officers grid (About | Officers | Gallery as top row).
-           The gallery will show 5 big pictures inside the gallery card (below About visually since it's
-           placed in the markup in the same grid order). -->
-      <section class="team-grid" aria-label="Club officers and gallery">
-        <!-- About (left) -->
-        <div class="member card" id="about">
+
+      <section class="full-grid" aria-label="Main cards">
+        <div class="card" id="about">
           <h3>About</h3>
           <div class="placeholder">
             <p><strong>Meeting:</strong> Tuesdays, 3:30–4:15pm</p>
@@ -249,8 +317,8 @@
           </div>
         </div>
 
-        <!-- Officers (center) -->
-        <div class="member card" id="officers">
+        <!-- Officers (top-right) -->
+        <div class="card" id="officers">
           <h3>Officers</h3>
           <div class="placeholder">
             <p><strong>President —</strong> William Xiong</p>
@@ -259,81 +327,87 @@
           </div>
         </div>
 
-        <!-- Gallery (right) — now contains 5 larger thumbnails -->
-        <div class="member card" id="gallery">
+        <!-- Gallery (below About, left column) -->
+        <div class="card" id="gallery">
           <h3>Gallery</h3>
           <div class="placeholder" style="padding:10px;">
             <div class="gallery" role="list">
-              <div role="listitem"><img class="thumb" src="assets/images/sample1.jpg" alt="Gallery 1"></div>
-              <div role="listitem"><img class="thumb" src="assets/images/sample2.jpg" alt="Gallery 2"></div>
-              <div role="listitem"><img class="thumb" src="assets/images/sample3.jpg" alt="Gallery 3"></div>
-              <div role="listitem"><img class="thumb" src="assets/images/sample4.jpg" alt="Gallery 4"></div>
-              <div role="listitem"><img class="thumb" src="assets/images/sample5.jpg" alt="Gallery 5"></div>
+              <!-- Replace these src paths with your own images in the repo -->
+              <div role="listitem"><img class="thumb" src="assets/images/sample1.jpg" alt="Project screenshot 1"></div>
+              <div role="listitem"><img class="thumb" src="assets/images/sample2.jpg" alt="Project screenshot 2"></div>
+              <div role="listitem"><img class="thumb" src="assets/images/sample3.jpg" alt="Project screenshot 3"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- Join (below Officers, right column) -->
+        <div class="card" id="join">
+          <h3>Join</h3>
+          <div class="placeholder">
+            <p>Sign-up form (opens in new tab):</p>
+            <p><a href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Open sign-up form</a></p>
           </div>
         </div>
       </section>
     </main>
+
   </div>
 
   <script>
-    // Dark mode toggle script (keeps your localStorage key and ids consistent)
-    (function () {
-      const toggle = document.getElementById('darkToggle');
-      const rootEl = document.documentElement;
-      const storageKey = 'mpc-dark';
-      const switchLabel = document.getElementById('switchLabel');
+    // Dark mode: toggle, persist, and update switch aria state
+    const toggle = document.getElementById('darkToggle');
+    const rootEl = document.documentElement;
+    const storageKey = 'mpc-dark';
+    const switchLabel = document.getElementById('switchLabel');
 
-      (function initTheme(){
-        const saved = localStorage.getItem(storageKey);
-        if (saved !== null) {
-          if (saved === '1') {
-            rootEl.classList.add('dark');
-            toggle.checked = true;
-            switchLabel.setAttribute('aria-checked','true');
-          } else {
-            rootEl.classList.remove('dark');
-            toggle.checked = false;
-            switchLabel.setAttribute('aria-checked','false');
-          }
-        } else {
-          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (prefersDark) {
-            rootEl.classList.add('dark'); toggle.checked = true; switchLabel.setAttribute('aria-checked','true');
-          }
-        }
-      })();
-
-      function setTheme(on) {
-        if (on) {
+    (function initTheme(){
+      const saved = localStorage.getItem(storageKey);
+      if (saved !== null) {
+        if (saved === '1') {
           rootEl.classList.add('dark');
-          localStorage.setItem(storageKey,'1');
+          toggle.checked = true;
           switchLabel.setAttribute('aria-checked','true');
         } else {
           rootEl.classList.remove('dark');
-          localStorage.setItem(storageKey,'0');
+          toggle.checked = false;
           switchLabel.setAttribute('aria-checked','false');
         }
+      } else {
+        // default: follow OS preference
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+          rootEl.classList.add('dark'); toggle.checked = true; switchLabel.setAttribute('aria-checked','true');
+        }
       }
+    })();
 
-      toggle.addEventListener('change', () => setTheme(toggle.checked));
+    toggle.addEventListener('change', () => {
+      if(toggle.checked) {
+        rootEl.classList.add('dark');
+        localStorage.setItem(storageKey,'1');
+        switchLabel.setAttribute('aria-checked','true');
+      } else {
+        rootEl.classList.remove('dark');
+        localStorage.setItem(storageKey,'0');
+        switchLabel.setAttribute('aria-checked','false');
+      }
+    });
 
-      // keyboard + click support on the visible switch wrapper
-      document.querySelectorAll('.switch').forEach(s => {
-        s.addEventListener('keydown', e => {
-          if (e.key === ' ' || e.key === 'Enter') {
-            e.preventDefault();
-            toggle.checked = !toggle.checked;
-            toggle.dispatchEvent(new Event('change'));
-          }
-        });
-        s.addEventListener('click', (ev) => {
-          if (ev.target.tagName.toLowerCase() === 'a') return;
+    // Keyboard access: toggle with Space or Enter on the visible switch label
+    document.querySelectorAll('.switch').forEach(s => {
+      s.addEventListener('keydown', e => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
           toggle.checked = !toggle.checked;
           toggle.dispatchEvent(new Event('change'));
-        });
+        }
       });
-    })();
+      s.addEventListener('click', (ev) => {
+        if (ev.target.tagName.toLowerCase() === 'a') return;
+        toggle.checked = !toggle.checked;
+        toggle.dispatchEvent(new Event('change'));
+      });
+    });
   </script>
 </body>
 </html>
