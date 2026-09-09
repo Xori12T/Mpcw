@@ -19,7 +19,14 @@
       --max-width: 1100px;
       /* shadow used for the down-right hard dropshadow */
       --shadow-color: rgba(0,0,0,0.06);
-      --toggle-size: 48px;
+      --toggle-size: 52px;
+
+      /* base sizing — bumped up for "two sizes bigger" feel */
+      --base-font-size: 18px;
+      --h1-size: 34px; /* header brand */
+      --h2-size: 36px; /* hero (reverted) */
+      --h3-size: 20px;
+      --btn-font-size: 18px;
     }
 
     /* Dark theme variables (flipped by .dark on <html>) */
@@ -44,22 +51,24 @@
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
+      line-height:1.55;
+      font-size: var(--base-font-size);
     }
 
-    /* Layout */
+    /* Container */
     .container{
       max-width:var(--max-width);
       margin:36px auto;
-      padding:24px;
+      padding:28px;
     }
 
+    /* Top nav / brand */
     header.nav {
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      margin-bottom:28px;
+      margin-bottom:32px;
     }
 
     .brand {
@@ -71,26 +80,26 @@
     }
 
     .logo {
-      width:52px;
-      height:52px;
-      border-radius:10px;
+      width:60px;
+      height:60px;
+      border-radius:12px;
       background:linear-gradient(135deg,var(--accent),#06aa5a);
       display:flex;
       align-items:center;
       justify-content:center;
       color:white;
-      font-weight:700;
+      font-weight:800;
       font-family: "Oswald", sans-serif;
-      font-size:20px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      font-size:22px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.08);
     }
 
     .brand h1{
       margin:0;
       font-family:"Oswald", "Lexend", sans-serif;
-      font-weight:700;
+      font-weight:800;
       letter-spacing:0.6px;
-      font-size:20px;
+      font-size:var(--h1-size); /* increased header h1 */
     }
 
     nav.primary {
@@ -103,11 +112,11 @@
     nav.primary a{
       color:var(--text);
       text-decoration:none;
-      font-weight:600;
-      padding:6px 10px;
-      border-radius:8px;
-      transition:background .18s ease, color .18s ease;
-      font-size:15px;
+      font-weight:700;
+      padding:8px 12px;
+      border-radius:10px;
+      transition:background .14s ease, color .14s ease;
+      font-size:var(--base-font-size);
     }
     nav.primary a:hover{ background:var(--card-bg); }
 
@@ -116,7 +125,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      font-size:14px;
+      font-size:15px;
       color:var(--muted);
       user-select:none;
     }
@@ -128,126 +137,129 @@
       height:var(--h);
       background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
       border-radius:999px;
-      padding:4px;
+      padding:5px;
       cursor:pointer;
       display:inline-flex;
       align-items:center;
       transition:box-shadow .18s ease, background .18s ease, transform .12s ease;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
     }
-    .switch:focus { outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:3px; }
+    .switch:focus { outline: 2px solid color-mix(in srgb, var(--accent) 36%, transparent); outline-offset:4px; }
     .switch input { display:none; }
     .knob {
-      width: calc(var(--h) - 4px);
-      height: calc(var(--h) - 4px);
+      width: calc(var(--h) - 6px);
+      height: calc(var(--h) - 6px);
       background:white;
       border-radius:50%;
       transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
       transform: translateX(0);
-      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      box-shadow:0 8px 22px rgba(0,0,0,0.12);
     }
     /* when dark: move knob right, change switch background to accent and add glow */
     html.dark .switch {
       background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(0,0,0,0.06));
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12), 0 0 18px color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.12), 0 0 20px color-mix(in srgb, var(--accent) 18%, transparent);
     }
-    html.dark .knob { transform: translateX(calc(var(--w) - var(--h))); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    html.dark .knob { transform: translateX(calc(var(--w) - var(--h))); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
 
-    /* small sun/moon indicators inside the switch for affordance */
     .switch .icon {
       position:absolute;
       top:50%;
       transform:translateY(-50%);
-      font-size:13px;
+      font-size:14px;
       line-height:1;
       pointer-events:none;
-      opacity:0.85;
+      opacity:0.95;
     }
-    .switch .sun { left:8px; color: #ffb84d; }
-    .switch .moon { right:8px; color: #cfe6ff; }
+    .switch .sun { left:10px; color: #ffb84d; }
+    .switch .moon { right:10px; color: #cfe6ff; }
 
-    /* Hero */
+    /* Hero intro (kept simple, hero h2 reverted) */
     .hero {
-      display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:28px;
-      align-items:center;
-      margin-bottom:28px;
+      margin-bottom:24px;
     }
     .hero .lead {
-      padding:22px;
+      padding:26px;
       background:linear-gradient(180deg, rgba(0,140,68,0.04), transparent);
       border-radius:var(--radius);
-      /* add subtle card shadow + down-right 'hard' shadow */
-      box-shadow: 0 10px 20px rgba(0,0,0,0.04), 6px 6px 0 var(--shadow-color);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.04), 6px 6px 0 var(--shadow-color);
     }
     h2.title {
       margin:0 0 12px 0;
       font-family:"Oswald",sans-serif;
       font-weight:700;
-      /* larger responsive heading */
-      font-size: clamp(32px, 6vw, 56px);
+      font-size:var(--h2-size); /* reverted to 36px */
       letter-spacing:0.2px;
       color:var(--text);
     }
-    p.lead-desc { margin:0 0 12px 0; color:var(--muted); font-size:16px; }
+    p.lead-desc { margin:0 0 12px 0; color:var(--muted); font-size:1.05rem; }
 
     .cta {
       display:flex;
-      gap:10px;
-      margin-top:12px;
+      gap:12px;
+      margin-top:14px;
     }
     .btn {
       background:var(--accent);
       color:white;
       border:none;
-      padding:10px 14px;
-      border-radius:10px;
+      padding:12px 18px;
+      border-radius:12px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       font-family:"Oswald",sans-serif;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
-      gap:8px;
+      gap:10px;
+      font-size:var(--btn-font-size); /* both buttons equal size */
     }
-    .btn.ghost { background:transparent; color:var(--accent); border:2px solid var(--accent); }
+    .btn.ghost { background:transparent; color:var(--accent); border:3px solid var(--accent); padding:10px 16px; }
 
-    /* Cards / placeholders */
-    .grid {
+    /* BIG 2x2 grid: full-width across the container */
+    .full-grid {
+      margin-top:22px;
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap:18px;
-      margin-top:18px;
+      grid-template-columns: 1fr 1fr;
+      gap:20px;
+      width:100%;
     }
+
     .card {
       background:var(--card-bg);
-      border-radius:12px;
-      padding:16px;
-      /* down-right hard drop shadow using variable */
+      border-radius:14px;
+      padding:18px;
+      /* down-right hard drop shadow */
       box-shadow: 6px 6px 0 var(--shadow-color);
+      min-height:150px;
     }
-    .card h3 { margin:0 0 8px 0; font-family:"Oswald",sans-serif; font-size:16px;}
+    .card h3 {
+      margin:0 0 10px 0;
+      font-family:"Oswald",sans-serif;
+      font-size:var(--h3-size);
+      font-weight:700;
+    }
     .placeholder {
       background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
-      border-radius:8px;
-      padding:12px;
+      border-radius:10px;
+      padding:14px;
       color:var(--muted);
-      /* match card drop-shadow for consistent look */
       box-shadow: 6px 6px 0 var(--shadow-color);
+      font-size:1.03rem;
     }
 
-    /* Gallery thumbnails */
+    /* Gallery */
     .gallery {
       display:flex;
-      gap:8px;
+      gap:12px;
       flex-wrap:wrap;
+      align-items:center;
     }
     .thumb {
-      width:96px;
-      height:72px;
+      width:140px;
+      height:100px;
       background:#ddd;
-      border-radius:8px;
+      border-radius:10px;
       display:inline-block;
       object-fit:cover;
     }
@@ -257,14 +269,14 @@
       padding-top:18px;
       border-top:1px solid rgba(0,0,0,0.06);
       color:var(--muted);
-      font-size:14px;
+      font-size:1.02rem;
     }
 
-    /* Responsive */
-    @media (max-width:900px){
-      .hero { grid-template-columns: 1fr; }
-      .brand h1 { font-size:18px; }
-      .switch { --w:40px; --h:20px; }
+    /* Responsive adjustments */
+    @media (max-width:1000px){
+      .full-grid { grid-template-columns: 1fr; }
+      .logo { width:52px; height:52px; font-size:20px; }
+      :root { --h1-size: 28px; --h2-size:32px; --h3-size:18px; --btn-font-size:16px; }
     }
   </style>
 </head>
@@ -279,102 +291,86 @@
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="events.html">Events</a>
         <a href="members.html">Members</a>
-        <!-- Add more links / pages here -->
+        <!-- Removed Events tab as requested -->
+
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
-            <!-- hidden checkbox keeps semantics -->
             <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
             <span class="icon sun" aria-hidden="true">☀️</span>
             <span class="icon moon" aria-hidden="true">🌙</span>
             <span class="knob" aria-hidden="true"></span>
           </label>
-          <span style="font-weight:600;color:var(--muted);font-size:13px;">Dark</span>
+          <span style="font-weight:700;color:var(--muted);font-size:0.98rem;">Dark</span>
         </div>
       </nav>
     </header>
 
-    <main class="hero" role="main">
-      <section class="lead">
-        <h2 class="title">Multipurpose Coding</h2>
-        <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship. Add club mission, meeting time, and quick links below.</p>
-        <div class="cta">
-          <!-- primary Join now -> opens your Google Form -->
-          <a class="btn" href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer">Join — Sign up</a>
-          <button class="btn ghost" onclick="location.href='about.html'">Learn more</button>
-        </div>
-
-        <div class="grid" style="margin-top:16px;">
-          <div class="card">
-            <h3>About the club</h3>
-            <div class="placeholder">
-              <!-- Replace text below with a short blurb about the club -->
-              <p><strong>Meeting:</strong> Wednesdays 3:30–4:30pm</p>
-              <p><strong>Place:</strong> Room 104 / Zoom</p>
-              <p><strong>Focus:</strong> Web, Roblox, Python projects, and hack nights.</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Officers</h3>
-            <div class="placeholder">
-              <!-- Replace with officers' names, roles, contact -->
-              <p>President — Name</p>
-              <p>Vice — Name</p>
-              <p>Advisor — Teacher Name</p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Next event</h3>
-            <div class="placeholder">
-              <p><strong>Project Night:</strong> Date here</p>
-              <p>Bring laptops & project ideas.</p>
-            </div>
+    <!-- Hero / short mission -->
+    <main>
+      <section class="hero">
+        <div class="lead">
+          <h2 class="title">Multipurpose Coding</h2>
+          <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship. Add club mission, meeting time, and quick links below.</p>
+          <div class="cta">
+            <!-- Primary button now "Sign Up" and larger; learn-more same size -->
+            <a class="btn" href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer">Sign Up</a>
+            <a class="btn ghost" href="about.html" role="button">Learn more</a>
           </div>
         </div>
       </section>
 
-      <aside>
-        <div class="card">
-          <h3>Gallery</h3>
-          <div class="gallery" aria-hidden="false">
-            <!-- Put small images in /assets/images/ -->
-            <img class="thumb" src="assets/images/sample1.jpg" alt="Project screenshot 1">
-            <img class="thumb" src="assets/images/sample2.jpg" alt="Project screenshot 2">
-            <img class="thumb" src="assets/images/sample3.jpg" alt="Project screenshot 3">
-            <!-- If images are missing show placeholder grey boxes -->
-          </div>
-          <p style="margin-top:10px;color:var(--muted);font-size:13px;">Add images to <code>/assets/images/</code> and update these src paths.</p>
-        </div>
-
-        <div class="card" style="margin-top:12px;">
-          <h3 id="join">Join</h3>
+      <!-- Full-width 2x2 grid (About | Officers)
+           (Gallery below About) (Join below Officers) -->
+      <section class="full-grid" aria-label="Main cards">
+        <!-- About (top-left) -->
+        <div class="card" id="about">
+          <h3>About</h3>
           <div class="placeholder">
-            <p>Sign-up form (open in new tab):</p>
-            <p><a href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">https://forms.gle/UHN6ANiZiTkDb7wZA</a></p>
-            <p>Or email: <strong>email@school.edu</strong></p>
+            <p><strong>Meeting:</strong> Tuesdays, 3:30–4:15pm</p>
+            <p><strong>Place:</strong> Room 604</p>
+            <p><strong>Focus:</strong> Using AI for coding projects and practical tools to build faster.</p>
           </div>
         </div>
-      </aside>
-    </main>
 
-    <section style="margin-top:18px;">
-      <div class="card">
-        <h3>How to use / edit this site</h3>
-        <ol style="margin:0 0 0 18px;color:var(--muted);">
-          <li>Place images in <code>/assets/images/</code> and update the <code>&lt;img src=&quot;...&quot;&gt;</code> paths.</li>
-          <li>Edit the text placeholders (About, Officers, Next event).</li>
-          <li>To add pages create new .html files (example below) and add links to the top nav.</li>
-        </ol>
-      </div>
-    </section>
+        <!-- Officers (top-right) -->
+        <div class="card" id="officers">
+          <h3>Officers</h3>
+          <div class="placeholder">
+            <p><strong>President —</strong> William Xiong</p>
+            <p><strong>VP -</strong> Riland "Rilen" Yen</p>
+            <p><strong>Advisor —</strong> Mr. Nelson (the G.O.A.T.)</p>
+          </div>
+        </div>
+
+        <!-- Gallery (below About, left column) -->
+        <div class="card" id="gallery">
+          <h3>Gallery</h3>
+          <div class="placeholder" style="padding:10px;">
+            <div class="gallery" role="list">
+              <!-- Replace these src paths with your own images in the repo -->
+              <div role="listitem"><img class="thumb" src="assets/images/sample1.jpg" alt="Project screenshot 1"></div>
+              <div role="listitem"><img class="thumb" src="assets/images/sample2.jpg" alt="Project screenshot 2"></div>
+              <div role="listitem"><img class="thumb" src="assets/images/sample3.jpg" alt="Project screenshot 3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Join (below Officers, right column) -->
+        <div class="card" id="join">
+          <h3>Join</h3>
+          <div class="placeholder">
+            <p>Sign-up form (opens in new tab):</p>
+            <p><a href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">Open sign-up form</a></p>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>© <strong>Multipurpose Coding</strong> — Add year / school</div>
-        <div style="color:var(--muted);font-size:13px;">Made for quick GitHub Pages deployment</div>
+        <div style="color:var(--muted);font-size:1rem;">Made for quick GitHub Pages deployment</div>
       </div>
     </footer>
   </div>
@@ -428,9 +424,7 @@
           toggle.dispatchEvent(new Event('change'));
         }
       });
-      // Update semantic role aria on click as well
       s.addEventListener('click', (ev) => {
-        // ignore clicks on any nested link
         if (ev.target.tagName.toLowerCase() === 'a') return;
         toggle.checked = !toggle.checked;
         toggle.dispatchEvent(new Event('change'));

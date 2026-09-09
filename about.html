@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Multipurpose Coding</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent: #008c44;
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #666666;
+      --card-bg: #f7f7f7;
+      --radius: 12px;
+      --max-width: 1100px;
+      --shadow-color: rgba(0,0,0,0.06);
+      --base-font-size: 18px;
+      --h1-size: 34px;
+      --title-size: 26px;
+      --name-size: 20px;
+      --info-size: 16px;
+    }
+
+    html.dark {
+      --bg: #0b0b0b;
+      --text: #f7f7f7;
+      --muted: #bdbdbd;
+      --card-bg: #0f0f10;
+      --shadow-color: rgba(255,255,255,0.04);
+      --accent: #00a657;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      font-size:var(--base-font-size);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:36px auto;
+      padding:28px;
+    }
+
+    header.nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      margin-bottom:22px;
+    }
+    .brand { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
+    .logo{
+      width:56px; height:56px; border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),#06aa5a);
+      display:flex; align-items:center; justify-content:center;
+      color:white; font-family:"Oswald"; font-weight:800; font-size:20px;
+    }
+    .brand h1{ margin:0; font-family:"Oswald"; font-size:var(--h1-size); font-weight:800; }
+
+    nav.primary { display:flex; gap:14px; align-items:center; }
+    nav.primary a { text-decoration:none; color:var(--text); font-weight:700; padding:6px 10px; border-radius:8px; }
+
+    /* Team grid: 3 columns */
+    .team-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:22px;
+      align-items:start;
+    }
+
+    .member {
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:20px;
+      text-align:center;
+      box-shadow: 6px 6px 0 var(--shadow-color);
+      min-height: 360px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      gap:16px;
+    }
+
+    /* Square image with 5px black outline */
+    .portrait {
+      width:100%;
+      max-width:380px;
+      aspect-ratio:1/1; /* keep square */
+      object-fit:cover;
+      display:block;
+      border:5px solid #000;
+      border-radius:6px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      background:#e9e9e9;
+    }
+
+    /* Title (big) below image */
+    .member .role {
+      font-family:"Oswald",sans-serif;
+      font-size:var(--title-size);
+      font-weight:800;
+      margin:0;
+      color:var(--text);
+    }
+
+    /* Slightly smaller name box */
+    .member .name {
+      display:inline-block;
+      padding:10px 14px;
+      margin-top:4px;
+      font-size:var(--name-size);
+      font-weight:700;
+      border-radius:8px;
+      background:transparent;
+      color:var(--text);
+      min-width:60%;
+      border:2px solid rgba(0,0,0,0.06);
+    }
+
+    /* Info word box below that */
+    .member .info {
+      margin-top:8px;
+      font-size:var(--info-size);
+      color:var(--muted);
+      padding:8px 12px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+      border-radius:8px;
+      min-width:70%;
+    }
+
+    /* Responsive: stack on small screens */
+    @media (max-width:1000px){
+      .team-grid { grid-template-columns: 1fr; }
+      .portrait { max-width:640px; width:100%; }
+      :root { --h1-size:28px; --title-size:22px; --name-size:18px; --info-size:15px; }
+      .member { min-height:300px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="nav" role="banner">
+      <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
+        <div class="logo">MC</div>
+        <h1>Multipurpose Coding</h1>
+      </a>
+
+      <nav class="primary" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="members.html">Members</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="team-grid" aria-label="Club officers">
+        <!-- President -->
+        <article class="member" aria-labelledby="pres-role">
+          <img class="portrait" src="assets/images/president.jpg" alt="President photo (replace with your image)">
+          <div id="pres-role" class="role">President</div>
+          <div class="name">President Name</div>
+          <div class="info">Senior • Computer Science</div>
+        </article>
+
+        <!-- VP -->
+        <article class="member" aria-labelledby="vp-role">
+          <img class="portrait" src="assets/images/vp.jpg" alt="VP photo (replace with your image)">
+          <div id="vp-role" class="role">VP</div>
+          <div class="name">VP Name</div>
+          <div class="info">Junior • AI & Robotics</div>
+        </article>
+
+        <!-- Advisor -->
+        <article class="member" aria-labelledby="adv-role">
+          <img class="portrait" src="assets/images/advisor.jpg" alt="Advisor photo (replace with your image)">
+          <div id="adv-role" class="role">Advisor</div>
+          <div class="name">Teacher Name</div>
+          <div class="info">Computer Science Teacher</div>
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
