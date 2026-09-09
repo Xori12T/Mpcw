@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -15,8 +15,11 @@
       --text: #000000;
       --muted: #666666;
       --card-bg: #f7f7f7;
-      --radius: 10px;
+      --radius: 12px;
       --max-width: 1100px;
+      /* shadow used for the down-right hard dropshadow */
+      --shadow-color: rgba(0,0,0,0.06);
+      --toggle-size: 48px;
     }
 
     /* Dark theme variables (flipped by .dark on <html>) */
@@ -25,6 +28,10 @@
       --text: #f7f7f7;
       --muted: #bdbdbd;
       --card-bg: #0f0f10;
+      /* shadow is lighter than background so it reads as a lighter offset */
+      --shadow-color: rgba(255,255,255,0.04);
+      /* make accent slightly brighter on dark */
+      --accent: #00a657;
     }
 
     /* Reset + base */
@@ -88,7 +95,7 @@
 
     nav.primary {
       display:flex;
-      gap:16px;
+      gap:14px;
       align-items:center;
       flex-wrap:wrap;
     }
@@ -104,36 +111,60 @@
     }
     nav.primary a:hover{ background:var(--card-bg); }
 
-    /* Dark mode toggle */
+    /* Emphasized Dark mode toggle */
     .toggle {
       display:flex;
       align-items:center;
       gap:10px;
       font-size:14px;
       color:var(--muted);
+      user-select:none;
     }
     .switch {
+      --w: var(--toggle-size);
+      --h: calc(var(--toggle-size) / 2);
       position:relative;
-      width:44px;
-      height:26px;
-      background:var(--card-bg);
+      width:var(--w);
+      height:var(--h);
+      background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
       border-radius:999px;
-      padding:3px;
+      padding:4px;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      transition:box-shadow .18s ease, background .18s ease, transform .12s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     }
+    .switch:focus { outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:3px; }
     .switch input { display:none; }
     .knob {
-      position:absolute;
-      width:20px;
-      height:20px;
+      width: calc(var(--h) - 4px);
+      height: calc(var(--h) - 4px);
       background:white;
       border-radius:50%;
-      top:3px;
-      left:3px;
-      transition:left .18s ease, transform .18s ease;
-      box-shadow:0 3px 8px rgba(0,0,0,0.12);
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
+      transform: translateX(0);
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
     }
-    html.dark .knob { transform: translateX(18px); }
+    /* when dark: move knob right, change switch background to accent and add glow */
+    html.dark .switch {
+      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(0,0,0,0.06));
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12), 0 0 18px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+    html.dark .knob { transform: translateX(calc(var(--w) - var(--h))); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+
+    /* small sun/moon indicators inside the switch for affordance */
+    .switch .icon {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:13px;
+      line-height:1;
+      pointer-events:none;
+      opacity:0.85;
+    }
+    .switch .sun { left:8px; color: #ffb84d; }
+    .switch .moon { right:8px; color: #cfe6ff; }
 
     /* Hero */
     .hero {
@@ -147,12 +178,15 @@
       padding:22px;
       background:linear-gradient(180deg, rgba(0,140,68,0.04), transparent);
       border-radius:var(--radius);
+      /* add subtle card shadow + down-right 'hard' shadow */
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04), 6px 6px 0 var(--shadow-color);
     }
     h2.title {
       margin:0 0 12px 0;
       font-family:"Oswald",sans-serif;
       font-weight:700;
-      font-size:36px; /* tall, bold */
+      /* larger responsive heading */
+      font-size: clamp(32px, 6vw, 56px);
       letter-spacing:0.2px;
       color:var(--text);
     }
@@ -172,10 +206,14 @@
       cursor:pointer;
       font-weight:700;
       font-family:"Oswald",sans-serif;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .btn.ghost { background:transparent; color:var(--accent); border:2px solid var(--accent); }
 
-    /* Cards */
+    /* Cards / placeholders */
     .grid {
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -186,14 +224,17 @@
       background:var(--card-bg);
       border-radius:12px;
       padding:16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      /* down-right hard drop shadow using variable */
+      box-shadow: 6px 6px 0 var(--shadow-color);
     }
     .card h3 { margin:0 0 8px 0; font-family:"Oswald",sans-serif; font-size:16px;}
     .placeholder {
-      background:linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+      background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
       border-radius:8px;
       padding:12px;
       color:var(--muted);
+      /* match card drop-shadow for consistent look */
+      box-shadow: 6px 6px 0 var(--shadow-color);
     }
 
     /* Gallery thumbnails */
@@ -223,6 +264,7 @@
     @media (max-width:900px){
       .hero { grid-template-columns: 1fr; }
       .brand h1 { font-size:18px; }
+      .switch { --w:40px; --h:20px; }
     }
   </style>
 </head>
@@ -240,12 +282,15 @@
         <a href="events.html">Events</a>
         <a href="members.html">Members</a>
         <!-- Add more links / pages here -->
-        <div class="toggle" title="Dark mode">
-          <label class="switch" aria-hidden="true">
+        <div class="toggle" title="Dark mode toggle">
+          <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
+            <!-- hidden checkbox keeps semantics -->
             <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
+            <span class="icon sun" aria-hidden="true">☀️</span>
+            <span class="icon moon" aria-hidden="true">🌙</span>
             <span class="knob" aria-hidden="true"></span>
           </label>
-          <span class="vis">Dark</span>
+          <span style="font-weight:600;color:var(--muted);font-size:13px;">Dark</span>
         </div>
       </nav>
     </header>
@@ -255,7 +300,8 @@
         <h2 class="title">Multipurpose Coding</h2>
         <p class="lead-desc">We build web, game, and data projects — learn, collaborate, and ship. Add club mission, meeting time, and quick links below.</p>
         <div class="cta">
-          <button class="btn" onclick="location.href='#join'">Join</button>
+          <!-- primary Join now -> opens your Google Form -->
+          <a class="btn" href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer">Join — Sign up</a>
           <button class="btn ghost" onclick="location.href='about.html'">Learn more</button>
         </div>
 
@@ -306,8 +352,9 @@
         <div class="card" style="margin-top:12px;">
           <h3 id="join">Join</h3>
           <div class="placeholder">
-            <p>Sign-up link or contact: <strong>email@school.edu</strong></p>
-            <p><a href="mailto:email@school.edu" style="color:var(--accent);text-decoration:underline;">Email us to join</a></p>
+            <p>Sign-up form (open in new tab):</p>
+            <p><a href="https://forms.gle/UHN6ANiZiTkDb7wZA" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">https://forms.gle/UHN6ANiZiTkDb7wZA</a></p>
+            <p>Or email: <strong>email@school.edu</strong></p>
           </div>
         </div>
       </aside>
@@ -333,21 +380,30 @@
   </div>
 
   <script>
-    // Dark mode: toggle and persist
+    // Dark mode: toggle, persist, and update switch aria state
     const toggle = document.getElementById('darkToggle');
     const rootEl = document.documentElement;
     const storageKey = 'mpc-dark';
+    const switchLabel = document.getElementById('switchLabel');
 
-    // Initialize from localStorage or prefers-color-scheme
     (function initTheme(){
       const saved = localStorage.getItem(storageKey);
       if (saved !== null) {
-        if (saved === '1') rootEl.classList.add('dark');
-        toggle.checked = saved === '1';
+        if (saved === '1') {
+          rootEl.classList.add('dark');
+          toggle.checked = true;
+          switchLabel.setAttribute('aria-checked','true');
+        } else {
+          rootEl.classList.remove('dark');
+          toggle.checked = false;
+          switchLabel.setAttribute('aria-checked','false');
+        }
       } else {
         // default: follow OS preference
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) { rootEl.classList.add('dark'); toggle.checked = true; }
+        if (prefersDark) {
+          rootEl.classList.add('dark'); toggle.checked = true; switchLabel.setAttribute('aria-checked','true');
+        }
       }
     })();
 
@@ -355,18 +411,30 @@
       if(toggle.checked) {
         rootEl.classList.add('dark');
         localStorage.setItem(storageKey,'1');
+        switchLabel.setAttribute('aria-checked','true');
       } else {
         rootEl.classList.remove('dark');
         localStorage.setItem(storageKey,'0');
+        switchLabel.setAttribute('aria-checked','false');
       }
     });
 
-    // Small accessibility: allow space to toggle
+    // Keyboard access: toggle with Space or Enter on the visible switch label
     document.querySelectorAll('.switch').forEach(s => {
       s.addEventListener('keydown', e => {
-        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle.checked = !toggle.checked; toggle.dispatchEvent(new Event('change')); }
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggle.checked = !toggle.checked;
+          toggle.dispatchEvent(new Event('change'));
+        }
       });
-      s.setAttribute('tabindex','0');
+      // Update semantic role aria on click as well
+      s.addEventListener('click', (ev) => {
+        // ignore clicks on any nested link
+        if (ev.target.tagName.toLowerCase() === 'a') return;
+        toggle.checked = !toggle.checked;
+        toggle.dispatchEvent(new Event('change'));
+      });
     });
   </script>
 </body>
