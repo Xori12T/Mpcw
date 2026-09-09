@@ -69,6 +69,28 @@
     nav.primary { display:flex; gap:14px; align-items:center; }
     nav.primary a { text-decoration:none; color:var(--text); font-weight:700; padding:6px 10px; border-radius:8px; }
 
+     .toggle { display:flex; align-items:center; gap:10px; }
+    .switch {
+      --w:52px; --h:26px;
+      width:var(--w); height:var(--h);
+      border-radius:999px; padding:4px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
+      border:3px solid rgba(0,0,0,0.08);
+      display:inline-flex; align-items:center;
+      cursor:pointer;
+    }
+    html.dark .switch { background:#000; border-color:rgba(255,255,255,0.9); }
+    .knob {
+      width: calc(var(--h) - 8px);
+      height: calc(var(--h) - 8px);
+      border-radius:50%;
+      background: #000;
+      border: 2px solid #000;
+      transition: transform .18s ease, background .12s;
+      transform: translateX(0);
+    }
+    html.dark .knob { background:#fff; border-color:#fff; transform: translateX(calc(var(--w) - var(--h))); }
+
     /* Team grid: 3 columns */
     .team-grid{
       display:grid;
@@ -182,7 +204,7 @@
 
         <!-- VP -->
         <article class="member" aria-labelledby="vp-role">
-          <img class="portrait" src="assets/images/vp.jpg" alt="photo of the vice prez. if it doesnt appear that means it didn't load or i didn't put an image :/">
+          <img class="portrait" src="assets/images/vp.jpg" alt="photo of the vice prez. if it doesnt appear that means it didn't load or i didn't put an image">
           <div id="vp-role" class="role">VP</div>
           <div class="name">Riland Yen</div>
           <div class="info">Junior, likes to hang out w/ friends</div>
@@ -190,7 +212,7 @@
 
         <!-- Advisor -->
         <article class="member" aria-labelledby="adv-role">
-          <img class="portrait" src="assets/images/advisor.jpg" alt="Advisor photo (replace with your image)">
+          <img class="portrait" src="assets/images/advisor.jpg" alt="photo of mr nelson. if it doesnt appear, it didn't load or i didn't put an image">
           <div id="adv-role" class="role">Advisor</div>
           <div class="name">Mr. Nelson</div>
           <div class="info">The GOAT! He teaches NGSS and AP Physics. </div>
@@ -198,5 +220,65 @@
       </section>
     </main>
   </div>
+
+  <script>
+    // Dark mode toggle script (keeps your localStorage key and ids consistent)
+    (function () {
+      const toggle = document.getElementById('darkToggle');
+      const rootEl = document.documentElement;
+      const storageKey = 'mpc-dark';
+      const switchLabel = document.getElementById('switchLabel');
+
+      (function initTheme(){
+        const saved = localStorage.getItem(storageKey);
+        if (saved !== null) {
+          if (saved === '1') {
+            rootEl.classList.add('dark');
+            toggle.checked = true;
+            switchLabel.setAttribute('aria-checked','true');
+          } else {
+            rootEl.classList.remove('dark');
+            toggle.checked = false;
+            switchLabel.setAttribute('aria-checked','false');
+          }
+        } else {
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (prefersDark) {
+            rootEl.classList.add('dark'); toggle.checked = true; switchLabel.setAttribute('aria-checked','true');
+          }
+        }
+      })();
+
+      function setTheme(on) {
+        if (on) {
+          rootEl.classList.add('dark');
+          localStorage.setItem(storageKey,'1');
+          switchLabel.setAttribute('aria-checked','true');
+        } else {
+          rootEl.classList.remove('dark');
+          localStorage.setItem(storageKey,'0');
+          switchLabel.setAttribute('aria-checked','false');
+        }
+      }
+
+      toggle.addEventListener('change', () => setTheme(toggle.checked));
+
+      // keyboard + click support on the visible switch wrapper
+      document.querySelectorAll('.switch').forEach(s => {
+        s.addEventListener('keydown', e => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            toggle.checked = !toggle.checked;
+            toggle.dispatchEvent(new Event('change'));
+          }
+        });
+        s.addEventListener('click', (ev) => {
+          if (ev.target.tagName.toLowerCase() === 'a') return;
+          toggle.checked = !toggle.checked;
+          toggle.dispatchEvent(new Event('change'));
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
