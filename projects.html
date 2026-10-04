@@ -22,6 +22,8 @@
       --base-font-size: 18px;
       --h1-size: 34px;
       --tab-height: 46px;
+      --toggle-w: 56px;
+      --toggle-h: 28px;
     }
     html.dark{
       --bg:#0b0b0b;
@@ -49,7 +51,7 @@
       padding:22px;
     }
 
-    /* Header (same look as your site) */
+    /* Header (copied from index) */
     header.nav{
       display:flex;
       align-items:center;
@@ -69,29 +71,60 @@
     nav.primary { display:flex; gap:14px; align-items:center; }
     nav.primary a { text-decoration:none; color:var(--text); font-weight:700; padding:6px 10px; border-radius:8px; }
 
-    /* Dark switch (keeps behaviour/style similar to your other pages) */
+    /* UPDATED switch visuals:
+       - light mode: track = --accent (green), knob = white with black outline
+       - dark mode: track = dark background, knob = black with white outline
+    */
     .toggle { display:flex; align-items:center; gap:10px; }
     .switch {
-      --w:52px; --h:26px;
+      --w: var(--toggle-w);
+      --h: var(--toggle-h);
       width:var(--w); height:var(--h);
-      border-radius:999px; padding:4px; display:inline-flex; align-items:center;
-      background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-      border:3px solid rgba(0,0,0,0.08);
+      border-radius:999px;
+      padding:4px;
+      display:inline-flex;
+      align-items:center;
+      position:relative;
       cursor:pointer;
+      transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      /* LIGHT MODE TRACK = GREEN */
+      background: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
-    html.dark .switch { background:#000; border-color:rgba(255,255,255,0.9); }
+    /* dark mode track */
+    html.dark .switch {
+      background: #000; /* dark track */
+      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    }
+    .switch input { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+
+    /* Knob: white with black outline in light, black with white outline in dark */
     .knob {
       width: calc(var(--h) - 8px);
       height: calc(var(--h) - 8px);
       border-radius:50%;
-      background: #000;
-      border: 2px solid #000;
+      background: #fff; /* light mode inner */
+      border: 2px solid #000; /* light mode outline black */
+      box-sizing:border-box;
       transform: translateX(0);
-      transition: transform .18s ease, background .12s;
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), background .12s ease, border-color .12s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
-    html.dark .knob { background:#fff; border-color:#fff; transform: translateX(calc(var(--w) - var(--h))); }
+    /* dark mode knob */
+    html.dark .knob {
+      background:#000;
+      border: 2px solid #fff;
+      transform: translateX(calc(var(--w) - var(--h)));
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+    }
 
-    /* Page tabs */
+    .knob:focus { outline: none; }
+
+    .switch:focus { outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent); outline-offset:4px; }
+
+    /* Tabs / page UI */
     .tabs {
       display:flex;
       gap:8px;
@@ -112,10 +145,6 @@
     .tab-btn[aria-selected="true"]{
       background: linear-gradient(180deg, rgba(0,140,68,0.08), rgba(0,140,68,0.02));
       box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-    }
-
-    main.section {
-      margin-top:6px;
     }
 
     /* Members list (vertical cells) */
@@ -158,8 +187,6 @@
     .small-input { padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; color:inherit; font:inherit; }
 
     .controls { margin:10px 0 16px; display:flex; gap:10px; flex-wrap:wrap; }
-
-    /* small helpers */
     .muted { color:var(--muted); font-size:0.95rem; }
     .btn { background:var(--accent); color:white; border:0; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:800; font-family:"Oswald"; }
     .btn.secondary { background:transparent; color:var(--accent); border:2px solid var(--accent); font-weight:700; }
@@ -175,7 +202,7 @@
 <body>
   <div class="container">
 
-    <!-- header (same brand + dark switch) -->
+    <!-- header (copied from index) -->
     <header class="nav" role="banner">
       <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
         <div class="logo">MC</div>
@@ -185,13 +212,14 @@
       <nav class="primary" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="members.html">Members</a>
+        <a href="projects.html">Projects</a>
 
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
-            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" />
             <span class="knob" aria-hidden="true"></span>
           </label>
+          <span style="font-weight:700;color:var(--muted);font-size:0.98rem;">Dark</span>
         </div>
       </nav>
     </header>
@@ -214,7 +242,7 @@
         </div>
       </section>
 
-      <!-- Projects panel (hidden by default) -->
+      <!-- Projects panel -->
       <section id="panelProjects" role="tabpanel" aria-labelledby="tabProjects" hidden>
         <div class="controls">
           <button id="addProjectBtn" class="btn">Add project</button>
@@ -222,24 +250,7 @@
         </div>
 
         <div id="projectsList" class="projects-list">
-          <!-- Example template project card (one prefilled template shown) -->
-          <div class="project-card" data-template>
-            <div class="project-left">
-              <label>Creator username</label>
-              <input class="small-input js-creator" placeholder="github username (e.g. SpaceStationLvl17)" />
-              <label>Repo name</label>
-              <input class="small-input js-repo" placeholder="repo-name (e.g. my-project)" />
-              <div style="display:flex;gap:8px;margin-top:8px;">
-                <button class="btn js-autofill">Auto-fill from GitHub</button>
-                <button class="btn secondary js-remove">Remove</button>
-              </div>
-            </div>
-
-            <div class="project-meta">
-              <div class="muted">Repo preview</div>
-              <div class="js-repo-preview muted">Fill creator & repo then click Auto-fill, or add link manually.</div>
-            </div>
-          </div>
+          <!-- empty: JS will add a template card on load -->
         </div>
       </section>
     </main>
@@ -255,7 +266,7 @@
       const key = 'mpc-dark';
       const visual = document.querySelector('.switch');
 
-      // init
+      // initialize theme from localStorage or prefers
       const saved = localStorage.getItem(key);
       if (saved === '1') {
         root.classList.add('dark');
@@ -282,7 +293,6 @@
         }
       }
 
-      // clicks & keyboard
       visual.addEventListener('click', ()=> setDark(!root.classList.contains('dark')));
       visual.addEventListener('keydown', e => {
         if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); setDark(!root.classList.contains('dark')); }
@@ -325,13 +335,13 @@
      * Members: fetch avatars & recent repo
      ************************************/
     (function(){
-      // initial list of GitHub usernames (from your message)
+      // list of GitHub usernames
       const memberUsernames = [
         "SpaceStationLvl17",
         "joshy912",
         "blu3z11",
         "Atlasrepublic1",
-        "template-user-placeholder" // template user — won't exist on GitHub (keeps example)
+        "template-user-placeholder"
       ];
 
       const membersList = document.getElementById('membersList');
@@ -364,11 +374,9 @@
         const userEl = card.querySelector('.username');
         const repoEl = card.querySelector('.repo');
 
-        // default values
         nameEl.textContent = username;
         userEl.innerHTML = `<a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer">${username}</a>`;
 
-        // If username is obviously placeholder, don't fetch
         if(username.includes('template') || username.includes('placeholder')){
           avatarEl.style.background = '#ddd';
           avatarEl.src = '';
@@ -377,12 +385,10 @@
         }
 
         try {
-          // fetch user profile
           const userResp = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`);
           if (!userResp.ok) throw new Error('not found');
           const userJson = await userResp.json();
 
-          // avatar
           if(userJson.avatar_url){
             avatarEl.src = userJson.avatar_url;
             avatarEl.alt = (userJson.name || username) + ' avatar';
@@ -391,16 +397,13 @@
             avatarEl.style.background = '#ddd';
           }
 
-          // name display
           if (userJson.name && userJson.name.trim().length) {
-            // show first name only (split by space)
             const first = userJson.name.trim().split(' ')[0];
             nameEl.textContent = first;
           } else {
             nameEl.textContent = username;
           }
 
-          // username / profile link
           userEl.innerHTML = `<a href="${userJson.html_url}" target="_blank" rel="noopener noreferrer">${username}</a>`;
 
           // fetch most recently updated repo (if any)
@@ -417,7 +420,6 @@
             repoEl.textContent = '';
           }
         } catch(e) {
-          // network or not found: graceful fallback
           avatarEl.src = '';
           avatarEl.style.background = '#ddd';
           nameEl.textContent = username;
@@ -431,15 +433,11 @@
         for(const u of memberUsernames){
           const card = makeCardSkeleton(u);
           membersList.appendChild(card);
-          // fill each card (don't await serially for speed)
           fillCard(card,u).catch(()=>{});
         }
       }
 
-      // initial render
       renderMembers();
-
-      // Refresh button
       document.getElementById('refreshMembers').addEventListener('click', () => renderMembers());
     })();
 
@@ -472,7 +470,6 @@
           </div>
         `;
 
-        // wire actions
         card.querySelector('.js-remove').addEventListener('click', () => card.remove());
         card.querySelector('.js-autofill').addEventListener('click', async () => {
           const creatorInput = card.querySelector('.js-creator');
@@ -486,7 +483,6 @@
             const resp = await fetch(`https://api.github.com/repos/${encodeURIComponent(creatorVal)}/${encodeURIComponent(repoVal)}`);
             if(!resp.ok) throw new Error('not found');
             const j = await resp.json();
-            // fill preview
             const desc = j.description ? ` — ${j.description}` : '';
             preview.innerHTML = `<strong><a href="${j.html_url}" target="_blank" rel="noopener noreferrer">${j.full_name}</a></strong><div class="muted">${desc}</div>`;
           } catch(err){
@@ -501,22 +497,15 @@
         return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[ch]));
       }
 
-      // add initial template card (clone from your pre-filled template)
-      const templateCard = projectsList.querySelector('[data-template]');
-      if(templateCard){
-        // remove the data-template attribute and keep it as first card but wire up its actions
-        templateCard.removeAttribute('data-template');
-        const newCard = createProjectCard();
-        // copy inputs into newCard if template had defaults (we left empty)
-        projectsList.replaceChild(newCard, templateCard);
-      }
-
+      // start with one empty template card
       addBtn.addEventListener('click', () => {
         const c = createProjectCard();
         projectsList.appendChild(c);
-        // focus new card's first input
         c.querySelector('.js-creator').focus();
       });
+
+      // add one on load
+      projectsList.appendChild(createProjectCard());
 
       clearBtn.addEventListener('click', () => {
         if(!confirm('Clear all project cards?')) return;

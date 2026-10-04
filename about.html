@@ -19,7 +19,6 @@
       --max-width: 1100px;
       --shadow-color: rgba(0,0,0,0.06);
 
-      /* Dark mode toggle */
       --toggle-size: 52px;
 
       --base-font-size: 18px;
@@ -39,31 +38,18 @@
       --accent: #00a657;
     }
 
-    /* Reset */
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
-
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: "Lexend", system-ui, -apple-system, "Segoe UI",
-        Roboto, "Helvetica Neue", Arial;
+      font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: var(--bg);
       color: var(--text);
       font-size: var(--base-font-size);
       line-height: 1.55;
-
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-
-      transition:
-        background-color .18s ease,
-        color .18s ease;
+      transition: background-color .18s ease, color .18s ease;
     }
 
     /* Container */
@@ -94,25 +80,15 @@
       width: 56px;
       height: 56px;
       border-radius: 10px;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent),
-          #06aa5a
-        );
-
+      background: linear-gradient(135deg, var(--accent), #06aa5a);
       display: flex;
       align-items: center;
       justify-content: center;
-
       color: white;
       font-family: "Oswald", sans-serif;
       font-weight: 800;
       font-size: 20px;
-
-      box-shadow:
-        0 8px 22px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
     }
 
     .brand h1 {
@@ -123,7 +99,6 @@
       letter-spacing: 0.6px;
     }
 
-    /* Navigation */
     nav.primary {
       display: flex;
       gap: 14px;
@@ -137,151 +112,67 @@
       font-weight: 700;
       padding: 8px 12px;
       border-radius: 10px;
-
-      transition:
-        background .14s ease,
-        color .14s ease;
+      transition: background .14s ease, color .14s ease;
     }
+    nav.primary a:hover { background: var(--card-bg); }
 
-    nav.primary a:hover {
-      background: var(--card-bg);
-    }
-
-    /* =========================================
-       DARK MODE TOGGLE
-       Same style/functionality as first page
-       ========================================= */
-
-    .toggle {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 15px;
-      color: var(--muted);
-      user-select: none;
-    }
+    /* ============================
+       Dark mode switch - simplified & consistent
+       Light mode: track = accent (green), knob = white w/ black outline
+       Dark mode:  track = dark,   knob = black w/ white outline
+       ============================ */
+    .toggle { display:flex; align-items:center; gap:10px; font-size:15px; color:var(--muted); user-select:none; }
 
     .switch {
       --w: var(--toggle-size);
       --h: calc(var(--toggle-size) / 2);
-
       position: relative;
       width: var(--w);
       height: var(--h);
-
-      background:
-        linear-gradient(
-          180deg,
-          rgba(0,0,0,0.03),
-          rgba(0,0,0,0.01)
-        );
-
       border-radius: 999px;
-      padding: 5px;
-      cursor: pointer;
-
+      padding: 4px;
       display: inline-flex;
       align-items: center;
-
-      transition:
-        box-shadow .18s ease,
-        background .18s ease,
-        transform .12s ease;
-
-      box-shadow:
-        0 8px 28px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+      /* LIGHT MODE TRACK uses accent */
+      background: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
 
-    .switch:focus {
-      outline:
-        2px solid
-        color-mix(
-          in srgb,
-          var(--accent) 36%,
-          transparent
-        );
-
-      outline-offset: 4px;
+    html.dark .switch {
+      /* dark mode track */
+      background: #000;
+      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
     }
 
-    .switch input {
-      display: none;
-    }
+    .switch input { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
     .knob {
       width: calc(var(--h) - 6px);
       height: calc(var(--h) - 6px);
-
-      background: white;
       border-radius: 50%;
-
-      transition:
-        transform .18s cubic-bezier(.2,.9,.2,1),
-        box-shadow .18s;
-
+      background: #fff;            /* light mode knob inner */
+      border: 2px solid #000;     /* light mode knob outline */
+      box-sizing: border-box;
       transform: translateX(0);
-
-      box-shadow:
-        0 8px 22px rgba(0,0,0,0.12);
-    }
-
-    /* Dark mode switch */
-    html.dark .switch {
-      background:
-        linear-gradient(
-          90deg,
-          color-mix(
-            in srgb,
-            var(--accent) 24%,
-            transparent
-          ),
-          rgba(0,0,0,0.06)
-        );
-
-      box-shadow:
-        0 10px 36px rgba(0,0,0,0.12),
-        0 0 20px
-        color-mix(
-          in srgb,
-          var(--accent) 18%,
-          transparent
-        );
+      transition: transform .18s cubic-bezier(.2,.9,.2,1), background .12s ease, border-color .12s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
 
     html.dark .knob {
-      transform:
-        translateX(
-          calc(var(--w) - var(--h))
-        );
-
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.18);
+      background: #000;
+      border: 2px solid #fff;
+      transform: translateX(calc(var(--w) - var(--h)));
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
     }
 
-    .switch .icon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14px;
-      line-height: 1;
-      pointer-events: none;
-      opacity: 0.95;
-    }
+    /* small label next to switch */
+    .switch + .switch-label { font-weight:700; color:var(--muted); font-size:0.98rem; }
 
-    .switch .sun {
-      left: 10px;
-      color: #ffb84d;
-    }
-
-    .switch .moon {
-      right: 10px;
-      color: #cfe6ff;
-    }
-
-    /* =========================================
-       TEAM GRID
-       ========================================= */
-
+    /* Team grid */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -293,508 +184,194 @@
       background: var(--card-bg);
       border-radius: 12px;
       padding: 20px;
-
       text-align: center;
-
-      box-shadow:
-        6px 6px 0 var(--shadow-color);
-
+      box-shadow: 6px 6px 0 var(--shadow-color);
       min-height: 360px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-
       gap: 16px;
-
-      transition:
-        background-color .18s ease,
-        box-shadow .18s ease;
+      transition: background-color .18s ease, box-shadow .18s ease;
     }
 
-    /* Square image with black outline */
+    /* Square image with black outline; center images to reduce misalignment */
     .portrait {
       width: 100%;
       max-width: 380px;
       aspect-ratio: 1 / 1;
-
       object-fit: cover;
       display: block;
-
+      margin-left: auto;
+      margin-right: auto;
       border: 5px solid #000;
       border-radius: 6px;
-
-      box-shadow:
-        0 8px 18px rgba(0,0,0,0.06);
-
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
       background: #e9e9e9;
     }
 
-    /* Role */
     .member .role {
       font-family: "Oswald", sans-serif;
       font-size: var(--title-size);
       font-weight: 800;
-
       margin: 0;
-
       color: var(--text);
     }
 
-    /* Name */
     .member .name {
       display: inline-block;
-
       padding: 10px 14px;
       margin-top: 4px;
-
       font-size: var(--name-size);
       font-weight: 700;
-
       border-radius: 8px;
-
       background: transparent;
       color: var(--text);
-
       min-width: 60%;
-
-      border:
-        2px solid
-        rgba(0,0,0,0.06);
+      border: 2px solid rgba(0,0,0,0.06);
     }
 
-    /* Info */
     .member .info {
       margin-top: 8px;
-
       font-size: var(--info-size);
       color: var(--muted);
-
       padding: 8px 12px;
-
-      background:
-        linear-gradient(
-          180deg,
-          rgba(0,0,0,0.02),
-          transparent
-        );
-
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
       border-radius: 8px;
-
       min-width: 70%;
     }
 
-    /* =========================================
-       RESPONSIVE
-       ========================================= */
-
+    /* Responsive */
     @media (max-width: 1000px) {
-
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .portrait {
-        max-width: 640px;
-        width: 100%;
-      }
-
-      :root {
-        --h1-size: 28px;
-        --title-size: 22px;
-        --name-size: 18px;
-        --info-size: 15px;
-      }
-
-      .member {
-        min-height: 300px;
-      }
+      .team-grid { grid-template-columns: 1fr; }
+      .portrait { max-width: 640px; width: 100%; }
+      :root { --h1-size: 28px; --title-size: 22px; --name-size: 18px; --info-size: 15px; }
+      .member { min-height: 300px; }
     }
   </style>
 </head>
 
 <body>
-
   <div class="container">
 
-    <!-- =========================================
-         HEADER
-         ========================================= -->
-
+    <!-- HEADER -->
     <header class="nav" role="banner">
-
-      <a
-        class="brand"
-        href="index.html"
-        aria-label="Multipurpose Coding Home"
-      >
+      <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
         <div class="logo">MC</div>
         <h1>Multipurpose Coding</h1>
       </a>
 
       <nav class="primary" aria-label="Primary">
-
         <a href="index.html">Home</a>
-
         <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
 
         <!-- Dark Mode Toggle -->
-        <div
-          class="toggle"
-          title="Dark mode toggle"
-        >
-
-          <label
-            class="switch"
-            aria-hidden="false"
-            tabindex="0"
-            role="switch"
-            aria-checked="true"
-            id="switchLabel"
-          >
-
-            <input
-              id="darkToggle"
-              type="checkbox"
-              aria-label="Toggle dark mode"
-              checked
-            >
-
-            <span
-              class="knob"
-              aria-hidden="true"
-            ></span>
-
+        <div class="toggle" title="Dark mode toggle">
+          <label class="switch" aria-hidden="false" tabindex="0" role="switch" aria-checked="true" id="switchLabel">
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" checked>
+            <span class="knob" aria-hidden="true"></span>
           </label>
-
-          <span
-            style="
-              font-weight:700;
-              color:var(--muted);
-              font-size:0.98rem;
-            "
-          >
-            Dark
-          </span>
-
+          <span class="switch-label">Dark</span>
         </div>
-
       </nav>
-
     </header>
 
-
-    <!-- =========================================
-         MAIN CONTENT
-         ========================================= -->
-
+    <!-- MAIN -->
     <main>
-
-      <section
-        class="team-grid"
-        aria-label="Club officers"
-      >
+      <section class="team-grid" aria-label="Club officers">
 
         <!-- President -->
-        <article
-          class="member"
-          aria-labelledby="pres-role"
-        >
-
-          <img
-            class="portrait"
-            src="assets/images/president.webp"
-            alt="Photo of William Xiong"
-          >
-
-          <div
-            id="pres-role"
-            class="role"
-          >
-            President
-          </div>
-
-          <div class="name">
-            William Xiong
-          </div>
-
-          <div class="info">
-            Junior, likes making all sorts of things.
-          </div>
-
+        <article class="member" aria-labelledby="pres-role">
+          <img class="portrait" src="assets/images/president.webp" alt="Photo of William Xiong">
+          <div id="pres-role" class="role">President</div>
+          <div class="name">William Xiong</div>
+          <div class="info">Junior, likes making all sorts of things.</div>
         </article>
-
 
         <!-- VP -->
-        <article
-          class="member"
-          aria-labelledby="vp-role"
-        >
-
-          <img
-            class="portrait"
-            src="assets/images/vp.webp"
-            alt="Photo of Riland Yen"
-          >
-
-          <div
-            id="vp-role"
-            class="role"
-          >
-            VP
-          </div>
-
-          <div class="name">
-            Riland Yen
-          </div>
-
-          <div class="info">
-            Junior, likes to hang out w/ friends
-          </div>
-
+        <article class="member" aria-labelledby="vp-role">
+          <img class="portrait" src="assets/images/vp.webp" alt="Photo of Riland Yen">
+          <div id="vp-role" class="role">VP</div>
+          <div class="name">Riland Yen</div>
+          <div class="info">Junior, likes to hang out w/ friends</div>
         </article>
 
-
         <!-- Advisor -->
-        <article
-          class="member"
-          aria-labelledby="adv-role"
-        >
-
-          <img
-            class="portrait"
-            src="assets/images/advisor.webp"
-            alt="Photo of Mr. Nelson"
-          >
-
-          <div
-            id="adv-role"
-            class="role"
-          >
-            Advisor
-          </div>
-
-          <div class="name">
-            Mr. Nelson
-          </div>
-
-          <div class="info">
-            The GOAT! He teaches NGSS and AP Physics.
-          </div>
-
+        <article class="member" aria-labelledby="adv-role">
+          <img class="portrait" src="assets/images/advisor.webp" alt="Photo of Mr. Nelson">
+          <div id="adv-role" class="role">Advisor</div>
+          <div class="name">Mr. Nelson</div>
+          <div class="info">The GOAT! He teaches NGSS and AP Physics.</div>
         </article>
 
       </section>
-
     </main>
-
   </div>
 
-
-  <!-- =========================================
-       DARK MODE SCRIPT
-       ========================================= -->
-
+  <!-- DARK MODE SCRIPT -->
   <script>
+    // Dark mode script (keeps same key as other pages)
+    (function () {
+      const toggle = document.getElementById('darkToggle');
+      const rootEl = document.documentElement;
+      const storageKey = 'mpc-dark';
+      const switchLabel = document.getElementById('switchLabel');
 
-    // Dark mode:
-    // - Defaults to DARK mode
-    // - Persists the user's choice
-    // - Uses the same localStorage key as index.html
-    // - Supports keyboard controls
-    // - Keeps aria-checked synchronized
-
-    const toggle =
-      document.getElementById('darkToggle');
-
-    const rootEl =
-      document.documentElement;
-
-    const storageKey =
-      'mpc-dark';
-
-    const switchLabel =
-      document.getElementById('switchLabel');
-
-
-    /*
-     * Initialize theme
-     *
-     * IMPORTANT:
-     * If the user has never selected a theme before,
-     * dark mode is automatically enabled.
-     */
-    (function initTheme() {
-
-      const saved =
-        localStorage.getItem(storageKey);
-
-      if (saved !== null) {
-
-        if (saved === '1') {
-
+      (function initTheme() {
+        const saved = localStorage.getItem(storageKey);
+        if (saved !== null) {
+          if (saved === '1') {
+            rootEl.classList.add('dark');
+            toggle.checked = true;
+            switchLabel.setAttribute('aria-checked','true');
+          } else {
+            rootEl.classList.remove('dark');
+            toggle.checked = false;
+            switchLabel.setAttribute('aria-checked','false');
+          }
+        } else {
+          // default to dark as your original file did — but you can change this
           rootEl.classList.add('dark');
-
           toggle.checked = true;
-
-          switchLabel.setAttribute(
-            'aria-checked',
-            'true'
-          );
-
-        } else {
-
-          rootEl.classList.remove('dark');
-
-          toggle.checked = false;
-
-          switchLabel.setAttribute(
-            'aria-checked',
-            'false'
-          );
-
+          switchLabel.setAttribute('aria-checked','true');
+          localStorage.setItem(storageKey,'1');
         }
+      })();
 
-      } else {
-
-        /*
-         * No saved preference:
-         * DEFAULT TO DARK MODE.
-         */
-        rootEl.classList.add('dark');
-
-        toggle.checked = true;
-
-        switchLabel.setAttribute(
-          'aria-checked',
-          'true'
-        );
-
-        /*
-         * Save dark mode so both pages
-         * immediately share the preference.
-         */
-        localStorage.setItem(
-          storageKey,
-          '1'
-        );
-
-      }
-
-    })();
-
-
-    /*
-     * Handle checkbox changes
-     */
-    toggle.addEventListener(
-      'change',
-      () => {
-
-        if (toggle.checked) {
-
+      function setTheme(on) {
+        if (on) {
           rootEl.classList.add('dark');
-
-          localStorage.setItem(
-            storageKey,
-            '1'
-          );
-
-          switchLabel.setAttribute(
-            'aria-checked',
-            'true'
-          );
-
+          localStorage.setItem(storageKey,'1');
+          switchLabel.setAttribute('aria-checked','true');
         } else {
-
           rootEl.classList.remove('dark');
-
-          localStorage.setItem(
-            storageKey,
-            '0'
-          );
-
-          switchLabel.setAttribute(
-            'aria-checked',
-            'false'
-          );
-
+          localStorage.setItem(storageKey,'0');
+          switchLabel.setAttribute('aria-checked','false');
         }
-
       }
-    );
 
+      toggle.addEventListener('change', () => setTheme(toggle.checked));
 
-    /*
-     * Keyboard accessibility
-     *
-     * Space or Enter toggles the switch.
-     */
-    document
-      .querySelectorAll('.switch')
-      .forEach(s => {
-
-        s.addEventListener(
-          'keydown',
-          e => {
-
-            if (
-              e.key === ' ' ||
-              e.key === 'Enter'
-            ) {
-
-              e.preventDefault();
-
-              toggle.checked =
-                !toggle.checked;
-
-              toggle.dispatchEvent(
-                new Event('change')
-              );
-
-            }
-
+      // keyboard + click support on the visible switch wrapper
+      document.querySelectorAll('.switch').forEach(s => {
+        s.addEventListener('keydown', e => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            toggle.checked = !toggle.checked;
+            toggle.dispatchEvent(new Event('change'));
           }
-        );
-
-
-        /*
-         * Mouse/touch support
-         */
-        s.addEventListener(
-          'click',
-          (ev) => {
-
-            if (
-              ev.target.tagName.toLowerCase()
-              === 'a'
-            ) {
-              return;
-            }
-
-            /*
-             * The input itself is hidden.
-             * Only toggle when clicking the
-             * visible switch wrapper.
-             */
-            if (ev.target === s) {
-
-              toggle.checked =
-                !toggle.checked;
-
-              toggle.dispatchEvent(
-                new Event('change')
-              );
-
-            }
-
+        });
+        s.addEventListener('click', (ev) => {
+          if (ev.target.tagName.toLowerCase() === 'a') return;
+          // toggle only when clicking the visible wrapper (input is hidden)
+          if (ev.target === s || s.contains(ev.target)) {
+            toggle.checked = !toggle.checked;
+            toggle.dispatchEvent(new Event('change'));
           }
-        );
-
+        });
       });
-
+    })();
   </script>
-
 </body>
 </html>
