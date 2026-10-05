@@ -9,55 +9,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
+    :root {
       --accent: #008c44;
       --bg: #ffffff;
       --text: #000000;
       --muted: #666666;
       --card-bg: #f7f7f7;
-      --radius: 12px;
       --max-width: 1100px;
       --shadow-color: rgba(0,0,0,0.06);
-
+      --toggle-size: 52px;
       --base-font-size: 18px;
       --h1-size: 34px;
-      --toggle-size: 52px;
     }
 
-    html.dark{
-      --bg:#0b0b0b;
-      --text:#f7f7f7;
-      --muted:#bdbdbd;
-      --card-bg:#0f0f10;
-      --accent:#00a657;
+    /* Dark theme */
+    html.dark {
+      --bg: #0b0b0b;
+      --text: #f7f7f7;
+      --muted: #bdbdbd;
+      --card-bg: #0f0f10;
+      --shadow-color: rgba(255,255,255,0.04);
+      --accent: #00a657;
     }
 
     * { box-sizing: border-box; }
-    body{
-      margin:0;
+    body {
+      margin: 0;
       font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--bg);
-      color:var(--text);
-      font-size:var(--base-font-size);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--base-font-size);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
     }
 
-    /* container aligns with index/about to avoid shift */
-    .container{
-      max-width:var(--max-width);
-      margin:36px auto;
-      padding:28px;
+    /* container matches about/index so pages align */
+    .container {
+      max-width: var(--max-width);
+      margin: 36px auto;
+      padding: 28px;
     }
 
-    /* Header (same as index/about) */
-    header.nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:32px;
+    /* Header (same as about) */
+    header.nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
     }
     .brand { display:flex; gap:14px; align-items:center; color:var(--text); text-decoration:none; }
     .logo {
@@ -70,23 +70,24 @@
     .brand h1 { margin:0; font-family:"Oswald",sans-serif; font-size:var(--h1-size); font-weight:800; letter-spacing:0.6px; }
 
     nav.primary { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
-    nav.primary a { color:var(--text); text-decoration:none; font-weight:700; padding:8px 12px; border-radius:10px; transition:background .14s ease, color .14s ease; }
+    nav.primary a { padding:8px 12px; color:var(--text); text-decoration:none; font-weight:700; border-radius:10px; transition:background .14s ease, color .14s ease; }
     nav.primary a:hover { background:var(--card-bg); }
 
-    /* switch visuals same as about/index */
-    .toggle { display:flex; align-items:center; gap:10px; font-size:15px; color:var(--muted); user-select:none; }
+    /* Dark-mode switch (copied from about) */
+    .toggle { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:15px; user-select:none; }
     .switch {
       --w: var(--toggle-size);
       --h: calc(var(--toggle-size) / 2);
-      position:relative;
-      width:var(--w);
-      height:var(--h);
-      border-radius:999px;
-      padding:5px;
-      display:inline-flex;
-      align-items:center;
-      cursor:pointer;
-      background: var(--accent); /* light mode track = accent */
+      position: relative;
+      width: var(--w);
+      height: var(--h);
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 999px;
+      /* LIGHT MODE SWITCH BACKGROUND */
+      background: var(--accent);
       box-shadow: 0 8px 28px rgba(0,0,0,0.06);
       transition: background .18s ease, box-shadow .18s ease;
     }
@@ -94,25 +95,31 @@
     .knob {
       width: calc(var(--h) - 6px);
       height: calc(var(--h) - 6px);
-      background: #fff;
-      border-radius:50%;
+      background: white;
+      border-radius: 50%;
       transform: translateX(0);
       box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-      transition: transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s ease;
+      transition: transform 0.18s cubic-bezier(.2,.9,.2,1), box-shadow 0.18s ease;
     }
     html.dark .switch {
-      background: #000;
-      box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+      background:
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--accent) 24%, transparent),
+          rgba(0,0,0,0.06)
+        );
+      box-shadow:
+        0 10px 36px rgba(0,0,0,0.12),
+        0 0 20px color-mix(in srgb, var(--accent) 18%, transparent);
     }
     html.dark .knob {
       transform: translateX(calc(var(--w) - var(--h)));
-      background:#000;
       box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     }
-    .switch:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent); outline-offset:4px; }
-    .switch-label { font-weight:700; color:var(--muted); font-size:0.98rem; }
+    .switch:focus-visible { outline: 3px solid var(--accent); outline-offset:4px; }
+    .switch-label { font-weight:700; font-size:0.98rem; }
 
-    /* tabs */
+    /* Tabs */
     .tabs { display:flex; gap:8px; border-bottom: 1px solid rgba(0,0,0,0.06); margin-bottom:18px; }
     .tab-btn {
       appearance:none; border:0; background:transparent; padding:10px 14px;
@@ -123,7 +130,7 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.04);
     }
 
-    /* Members list - vertical cells */
+    /* Members list - static */
     .members-list { display:flex; flex-direction:column; gap:14px; }
     .member-card {
       display:flex; gap:14px; align-items:center; background:var(--card-bg); border-radius:12px;
@@ -138,20 +145,19 @@
     .member-info .username { color:var(--muted); font-weight:700; }
     .member-info a { color:var(--accent); text-decoration:underline; }
 
-    /* Projects list: static project cells */
+    /* Projects list - static cells (kept as you provided) */
     .projects-list { display:flex; flex-direction:column; gap:14px; }
     .project-card {
       background:var(--card-bg); border-radius:12px; padding:14px; box-shadow: 0 8px 18px rgba(0,0,0,0.04);
       display:grid; grid-template-columns: 1fr 210px; gap:12px; align-items:center;
     }
     .project-left { display:flex; flex-direction:column; gap:6px; }
-    .project-left .repo-name { font-family:"Oswald"; font-weight:800; font-size:1.05rem; }
-    .project-left .meta { color:var(--muted); font-size:0.95rem; }
+    .repo-name { font-family:"Oswald"; font-weight:800; font-size:1.05rem; }
+    .meta { color:var(--muted); font-size:0.95rem; }
     .project-links { display:flex; gap:8px; justify-self:end; }
     .link-btn { padding:8px 10px; border-radius:8px; text-decoration:none; background:var(--accent); color:white; font-weight:700; font-family:"Oswald"; }
     .link-ghost { background:transparent; color:var(--accent); border:2px solid var(--accent); padding:6px 8px; border-radius:8px; text-decoration:none; font-weight:700; }
 
-    /* responsive */
     @media (max-width:900px){
       .project-card { grid-template-columns: 1fr; }
       .avatar-circle { width:56px; height:56px; font-size:18px; }
@@ -160,7 +166,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- header (same as index/about) -->
+    <!-- header (same as about) -->
     <header class="nav" role="banner">
       <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
         <div class="logo">MC</div>
@@ -172,9 +178,10 @@
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
 
+        <!-- DARK MODE -->
         <div class="toggle" title="Dark mode toggle">
           <label class="switch" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
-            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" />
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
             <span class="knob" aria-hidden="true"></span>
           </label>
           <span class="switch-label">Dark</span>
@@ -189,9 +196,9 @@
         <button id="tabProjects" class="tab-btn" role="tab" aria-controls="panelProjects" aria-selected="false">Projects</button>
       </div>
 
-      <!-- Members panel (static cards) -->
+      <!-- Members panel -->
       <section id="panelMembers" role="tabpanel" aria-labelledby="tabMembers">
-        <div class="members-list" id="membersList">
+        <div class="members-list">
           <div class="member-card">
             <div class="avatar-circle">W</div>
             <div class="member-info">
@@ -224,17 +231,17 @@
             </div>
           </div>
 
-          <div class="member-card">
+          <!-- <div class="member-card">
             <div class="avatar-circle">T</div>
             <div class="member-info">
               <div class="name">Template</div>
               <div class="username">template-user-placeholder</div>
             </div>
           </div>
-        </div>
+        </div> -->
       </section>
 
-      <!-- Projects panel (static project cards) -->
+      <!-- Projects panel -->
       <section id="panelProjects" role="tabpanel" aria-labelledby="tabProjects" hidden>
         <div class="projects-list" id="projectsList">
           <!-- Atlasrepublic1 / HorseOnWheels -->
@@ -295,54 +302,48 @@
   </div>
 
   <script>
-    // theme switch (same logic & storage key as index/about)
+    // theme switch (copied from your about.html)
     (function () {
-      const toggle = document.getElementById('darkToggle');
+      const toggle = document.getElementById("darkToggle");
+      const switchLabel = document.getElementById("switchLabel");
       const root = document.documentElement;
-      const key = 'mpc-dark';
-      const visual = document.querySelector('.switch');
+      const storageKey = "mpc-dark";
 
-      // init
-      const saved = localStorage.getItem(key);
-      if (saved === '1') {
-        root.classList.add('dark');
-        toggle.checked = true;
-        visual.setAttribute('aria-checked','true');
-      } else if (saved === '0') {
-        root.classList.remove('dark');
-        toggle.checked = false;
-        visual.setAttribute('aria-checked','false');
+      function setTheme(dark) {
+        root.classList.toggle("dark", dark);
+        toggle.checked = dark;
+        switchLabel.setAttribute("aria-checked", dark);
+        localStorage.setItem(storageKey, dark ? "1" : "0");
+      }
+
+      // Load saved theme or prefer-color-scheme
+      const saved = localStorage.getItem(storageKey);
+      if (saved !== null) {
+        setTheme(saved === "1");
       } else {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) { root.classList.add('dark'); toggle.checked = true; visual.setAttribute('aria-checked','true'); }
+        setTheme(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
       }
 
-      function setDark(on){
-        if(on){
-          root.classList.add('dark');
-          localStorage.setItem(key,'1');
-          visual.setAttribute('aria-checked','true');
-        } else {
-          root.classList.remove('dark');
-          localStorage.setItem(key,'0');
-          visual.setAttribute('aria-checked','false');
+      // checkbox change toggles theme
+      toggle.addEventListener("change", () => setTheme(toggle.checked));
+
+      // keyboard (space/enter) on the label toggles the theme
+      switchLabel.addEventListener("keydown", event => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          setTheme(!root.classList.contains("dark"));
         }
-      }
-
-      visual.addEventListener('click', ()=> setDark(!root.classList.contains('dark')));
-      visual.addEventListener('keydown', e => {
-        if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); setDark(!root.classList.contains('dark')); }
       });
     })();
 
-    // tabs behaviour
+    // tabs behaviour (keeps your tabs)
     (function () {
       const tabMembers = document.getElementById('tabMembers');
       const tabProjects = document.getElementById('tabProjects');
       const panelMembers = document.getElementById('panelMembers');
       const panelProjects = document.getElementById('panelProjects');
 
-      function showMembers(){ 
+      function showMembers(){
         tabMembers.setAttribute('aria-selected','true'); tabProjects.setAttribute('aria-selected','false');
         panelMembers.hidden = false; panelProjects.hidden = true;
       }
