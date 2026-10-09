@@ -14,78 +14,50 @@
   >
 
   <style>
+
     :root {
       --accent: #008c44;
-
       --bg: #ffffff;
       --text: #000000;
       --muted: #666666;
       --card-bg: #f7f7f7;
-
       --max-width: 1100px;
-      --shadow-color: rgba(0, 0, 0, 0.06);
-
+      --shadow-color: rgba(0,0,0,0.06);
       --toggle-size: 52px;
-
       --base-font-size: 18px;
       --h1-size: 34px;
-
       --title-size: 26px;
       --name-size: 20px;
       --info-size: 14px;
     }
 
-    /* DARK MODE */
-
-    html.dark {
-      --bg: #0b0b0b;
-      --text: #f7f7f7;
-      --muted: #bdbdbd;
-      --card-bg: #0f0f10;
-
-      --shadow-color: rgba(255, 255, 255, 0.04);
-
-      --accent: #00a657;
+    html.dark{
+      --bg:#0b0b0b;
+      --text:#f7f7f7;
+      --muted:#bdbdbd;
+      --card-bg:#0f0f10;
+      --accent:#00a657;
     }
 
-
-    /* GENERAL */
-
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      font-size:var(--base-font-size);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
     }
 
-    body {
-      margin: 0;
-
-      font-family:
-        "Lexend",
-        system-ui,
-        -apple-system,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-
-      background: var(--bg);
-      color: var(--text);
-
-      font-size: var(--base-font-size);
-      line-height: 1.5;
-
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    .container{
+      max-width:var(--max-width);
+      margin:36px auto;
+      padding:28px;
     }
 
-    .container {
-      max-width: var(--max-width);
-
-      margin: 36px auto;
-      padding: 28px;
-    }
-
-
+    /* Header (same as about/index) */
     header.nav{
       display:flex;
       align-items:center;
@@ -107,7 +79,7 @@
     nav.primary a { padding:8px 12px; color:var(--text); text-decoration:none; font-weight:700; border-radius:10px; transition:background .14s ease, color .14s ease; }
     nav.primary a:hover { background:var(--card-bg); }
 
-    /* Shared dark-mode switch */
+    /* Dark-mode switch (copied from about) */
     .toggle { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:15px; user-select:none; }
     .switch {
       --w: var(--toggle-size);
@@ -152,6 +124,7 @@
     }
     .switch:focus-visible { outline: 3px solid var(--accent); outline-offset:4px; }
     .switch-label { font-weight:700; font-size:0.98rem; }
+
 
     /* OFFICERS */
 
@@ -302,6 +275,7 @@
         gap: 5px;
       }
     }
+  
   </style>
 </head>
 
@@ -313,74 +287,24 @@
     <!-- HEADER -->
 
     <header class="nav" role="banner">
-
-      <a
-        class="brand"
-        href="index.html"
-        aria-label="Multipurpose Coding Home"
-      >
+      <a class="brand" href="index.html" aria-label="Multipurpose Coding Home">
         <div class="logo">MC</div>
-
-        <h1>
-          Multipurpose Coding
-        </h1>
+        <h1>Multipurpose Coding</h1>
       </a>
 
+      <nav class="primary" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="projects.html">Projects</a>
 
-      <nav
-        class="primary"
-        aria-label="Primary"
-      >
-
-        <a href="index.html">
-          Home
-        </a>
-
-        <a href="about.html" aria-current="page">
-          About
-        </a>
-
-        <a href="projects.html">
-          Projects
-        </a>
-
-
-        <!-- DARK MODE -->
-
-        <div
-          class="toggle"
-          title="Dark mode toggle"
-        >
-
-          <label
-            class="switch"
-            tabindex="0"
-            role="switch"
-            aria-checked="false"
-            id="switchLabel"
-          >
-
-            <input
-              id="darkToggle"
-              type="checkbox"
-              aria-label="Toggle dark mode"
-            >
-
-            <span
-              class="knob"
-              aria-hidden="true"
-            ></span>
-
+        <div class="toggle" title="Dark mode toggle">
+          <label class="switch" tabindex="0" role="switch" aria-checked="false" id="switchLabel">
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode">
+            <span class="knob" aria-hidden="true"></span>
           </label>
-
-          <span class="switch-label">
-            Dark
-          </span>
-
+          <span class="switch-label">Dark</span>
         </div>
-
       </nav>
-
     </header>
 
 
@@ -476,36 +400,94 @@
 
 
   <script>
-    // Shared theme switch: persist the choice and respect system preference.
-    (function () {
-      const toggle = document.getElementById("darkToggle");
-      const switchLabel = document.getElementById("switchLabel");
-      const root = document.documentElement;
-      const storageKey = "mpc-dark";
 
-      function setTheme(dark) {
-        root.classList.toggle("dark", dark);
-        toggle.checked = dark;
-        switchLabel.setAttribute("aria-checked", dark);
-        localStorage.setItem(storageKey, dark ? "1" : "0");
+    const toggle =
+      document.getElementById("darkToggle");
+
+    const switchLabel =
+      document.getElementById("switchLabel");
+
+    const root =
+      document.documentElement;
+
+    const storageKey =
+      "mpc-dark";
+
+
+    function setTheme(dark) {
+
+      root.classList.toggle(
+        "dark",
+        dark
+      );
+
+      toggle.checked = dark;
+
+      switchLabel.setAttribute(
+        "aria-checked",
+        dark
+      );
+
+      localStorage.setItem(
+        storageKey,
+        dark ? "1" : "0"
+      );
+
+    }
+
+
+    /* Load saved theme */
+
+    const saved =
+      localStorage.getItem(storageKey);
+
+    if (saved !== null) {
+
+      setTheme(saved === "1");
+
+    } else {
+
+      setTheme(
+        window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches
+      );
+
+    }
+
+
+    /* Checkbox click */
+
+    toggle.addEventListener(
+      "change",
+      () => {
+        setTheme(toggle.checked);
       }
+    );
 
-      const saved = localStorage.getItem(storageKey);
-      if (saved !== null) {
-        setTheme(saved === "1");
-      } else {
-        setTheme(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      }
 
-      toggle.addEventListener("change", () => setTheme(toggle.checked));
+    /* Keyboard */
 
-      switchLabel.addEventListener("keydown", event => {
-        if (event.key === " " || event.key === "Enter") {
+    switchLabel.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === " " ||
+          event.key === "Enter"
+        ) {
+
           event.preventDefault();
-          setTheme(!root.classList.contains("dark"));
+
+          setTheme(
+            !root.classList.contains("dark")
+          );
+
         }
-      });
-    })();
+
+      }
+    );
+  
   </script>
 
 </body>
